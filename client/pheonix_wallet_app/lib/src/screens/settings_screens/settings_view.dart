@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 
-import '../../Controllers/settings_controller.dart';
+import '../../controllers/settings_controller.dart';
 
 /// Displays the various settings that can be customized by the user.
 ///

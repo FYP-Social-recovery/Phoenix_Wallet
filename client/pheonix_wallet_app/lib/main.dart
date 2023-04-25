@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'src/app.dart';
-import 'src/Controllers/settings_controller.dart';
+import 'src/controllers/settings_controller.dart';
 import 'src/services/settings_service.dart';
 
 void main() async {

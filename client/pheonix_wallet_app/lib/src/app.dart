@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/sample_item_details_view.dart';
 import 'screens/sample_item_list_view.dart';
-import 'Controllers/settings_controller.dart';
+import 'controllers/settings_controller.dart';
 import 'screens/settings_screens/settings_view.dart';
 
 /// The Widget that configures your application.

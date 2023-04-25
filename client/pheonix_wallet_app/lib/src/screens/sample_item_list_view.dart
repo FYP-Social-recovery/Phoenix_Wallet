@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../settings/settings_view.dart';
-import 'sample_item.dart';
+import '../constants.dart';
+import 'settings_screens/settings_view.dart';
+import '../models/sample_item.dart';
 import 'sample_item_details_view.dart';
 
 /// Displays a list of SampleItems.
@@ -11,7 +12,7 @@ class SampleItemListView extends StatelessWidget {
     this.items = const [SampleItem(1), SampleItem(2), SampleItem(3)],
   });
 
-  static const routeName = '/';
+  static const routeName = homePage;
 
   final List<SampleItem> items;
 

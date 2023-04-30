@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pheonix_wallet_app/src/screens/splash_screen.dart';
 
 import 'screens/sample_item_details_view.dart';
 import 'screens/sample_item_list_view.dart';
@@ -79,7 +80,7 @@ class MyApp extends StatelessWidget {
                     return const SampleItemDetailsView();
                   case SampleItemListView.routeName:
                   default:
-                    return const SampleItemListView();
+                    return const SplashScreen();
                 }
               },
             );

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
+import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  SplashScreen({Key? key}) : super(key: key);
 
   static const routeName = splashScreen;
+
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +28,19 @@ class SplashScreen extends StatelessWidget {
             const SizedBox(
               height: 100,
             ),
-            CircularProgressIndicator(
-              color: Colors.orangeAccent[700],
+            Obx(
+              () => authController.splashScreenLoading.value
+                  ? Container(
+                      height: 40,
+                      width: 40,
+                      child: CircularProgressIndicator(
+                        color: Colors.orangeAccent[700],
+                      ),
+                    )
+                  : Container(
+                      height: 40,
+                      width: 40,
+                    ),
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
+import 'package:pheonix_wallet_app/src/controllers/app_binding.dart';
 import 'package:pheonix_wallet_app/src/screens/splash_screen.dart';
 
 import 'screens/sample_item_details_view.dart';
@@ -26,15 +28,11 @@ class MyApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: settingsController,
       builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          // Remove debug 
+        return GetMaterialApp(
+          // Remove debug
           debugShowCheckedModeBanner: false,
 
-          // Providing a restorationScopeId allows the Navigator built by the
-          // MaterialApp to restore the navigation stack when a user leaves and
-          // returns to the app after it has been killed while running in the
-          // background.
-          restorationScopeId: 'app',
+          initialBinding: AppBinding(),
 
           // Provide the generated AppLocalizations to the MaterialApp. This
           // allows descendant Widgets to display the correct translations
@@ -80,7 +78,7 @@ class MyApp extends StatelessWidget {
                     return const SampleItemDetailsView();
                   case SampleItemListView.routeName:
                   default:
-                    return const SplashScreen();
+                    return SplashScreen();
                 }
               },
             );

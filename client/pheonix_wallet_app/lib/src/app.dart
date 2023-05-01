@@ -3,10 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/controllers/app_binding.dart';
+import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/mnemonic_phrase_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/recover_wallet_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/splash_screen.dart';
 
-import 'screens/sample_item_details_view.dart';
-import 'screens/sample_item_list_view.dart';
 import 'controllers/settings_controller.dart';
 import 'screens/settings_screens/settings_view.dart';
 
@@ -74,9 +75,14 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
-                  case SampleItemListView.routeName:
+                  case SplashScreen.routeName:
+                    return SplashScreen();
+                  case MnemonicPhraseScreen.routeName:
+                    return MnemonicPhraseScreen();
+                  case RecoverWalletScreen.routeName:
+                    return RecoverWalletScreen();
+                  case HomeScreen.routeName:
+                    return HomeScreen();
                   default:
                     return SplashScreen();
                 }

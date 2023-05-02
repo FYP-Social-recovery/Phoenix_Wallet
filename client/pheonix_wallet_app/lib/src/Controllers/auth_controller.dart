@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
+import 'package:bip39/bip39.dart' as bip39;
+import 'package:web3dart/credentials.dart';
+import 'package:web3dart/crypto.dart';
+import 'dart:convert';
+import 'package:convert/convert.dart';
+import 'package:dart_bip32_bip44/dart_bip32_bip44.dart';
 
 class AuthController extends GetxController {
   var splashScreenLoading = true.obs;
@@ -23,22 +29,35 @@ class AuthController extends GetxController {
     splashScreenLoading.value = false;
   }
 
-  void createWallet() {
-    mnemonicPhrase.value =
-        "drill gain then core flag width short avoid worth battle multiply three";
-    publicKey.value = "0x050Ca8FBaA785B6C71dF11b855edda7EEFFAB32B";
-    privateKey.value =
-        "b970ae74ea4a0b976bec7ac3c80384965b7ab67c3808252b0ac8e84517bee417";
+  Future<void> createWallet() async {
+    String randomMnemonic = bip39.generateMnemonic();
+    String seed = bip39.mnemonicToSeedHex(randomMnemonic);
+    Chain chain = Chain.seed(seed);
+    ExtendedKey extendedKey = chain.forPath("m/44'/60'/0'/0/0");
+    String privateKeyTemp = extendedKey.privateKeyHex().substring(2);
+    Credentials credentials =
+        EthPrivateKey.fromHex(extendedKey.privateKeyHex());
+    var publicKeyTemp = await credentials.extractAddress();
+
+    mnemonicPhrase.value = randomMnemonic;
+    publicKey.value = publicKeyTemp.toString();
+    privateKey.value = privateKeyTemp;
     balance.value = 0.00;
     Get.toNamed(mnemonicPhraseScreen);
   }
 
   Future<void> recoverWallet(String phrase) async {
-    mnemonicPhrase.value =
-        "drill gain then core flag width short avoid worth battle multiply three";
-    publicKey.value = "0x050Ca8FBaA785B6C71dF11b855edda7EEFFAB32B";
-    privateKey.value =
-        "b970ae74ea4a0b976bec7ac3c80384965b7ab67c3808252b0ac8e84517bee417";
+    mnemonicPhrase.value = phrase;
+    String seed = bip39.mnemonicToSeedHex(phrase);
+    Chain chain = Chain.seed(seed);
+    ExtendedKey extendedKey = chain.forPath("m/44'/60'/0'/0/0");
+    String privateKeyTemp = extendedKey.privateKeyHex().substring(2);
+    Credentials credentials =
+        EthPrivateKey.fromHex(extendedKey.privateKeyHex());
+    var publicKeyTemp = await credentials.extractAddress();
+
+    publicKey.value = publicKeyTemp.toString();
+    privateKey.value = privateKeyTemp;
     balance.value = 0.00;
     Get.snackbar(
       "Recovery successful",

@@ -48,7 +48,7 @@ class MnemonicPhraseScreen extends StatelessWidget {
               PrimaryButton(
                 buttonText: "Continue",
                 onPressed: () {
-                  Get.toNamed(homeScreen);
+                  Get.toNamed(navigationScreen);
                 },
               ),
             ],

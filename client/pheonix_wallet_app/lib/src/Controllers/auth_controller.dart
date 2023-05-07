@@ -17,6 +17,8 @@ class AuthController extends GetxController {
   var currency = "ETH".obs;
   var network = "Ethereum mainet".obs;
 
+  var selectedIndex = 0.obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -30,7 +32,9 @@ class AuthController extends GetxController {
   }
 
   Future<void> createWallet() async {
-    String randomMnemonic = bip39.generateMnemonic();
+    String randomMnemonic =
+        "promote people van pencil december intact cement taste valid history onion fame"; //bip39.generateMnemonic();
+    print(randomMnemonic);
     String seed = bip39.mnemonicToSeedHex(randomMnemonic);
     Chain chain = Chain.seed(seed);
     ExtendedKey extendedKey = chain.forPath("m/44'/60'/0'/0/0");
@@ -65,6 +69,6 @@ class AuthController extends GetxController {
       colorText: Color(0xFFFF6D00),
     );
     await Future.delayed(const Duration(seconds: 2));
-    Get.toNamed(homeScreen);
+    Get.toNamed(navigationScreen);
   }
 }

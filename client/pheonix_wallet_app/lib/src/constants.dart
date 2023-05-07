@@ -5,4 +5,4 @@ const String settingsPage = '/settings';
 const String splashScreen = '/';
 const String mnemonicPhraseScreen = '/mnemonicPhraseScreen';
 const String recoverWalletScreen = '/recoverWalletScreen';
-const String homeScreen = '/home';
+const String navigationScreen = '/navigationScreen';

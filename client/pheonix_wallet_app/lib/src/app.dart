@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/controllers/app_binding.dart';
 import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/navigation_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/mnemonic_phrase_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/recover_wallet_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/splash_screen.dart';
@@ -81,8 +82,10 @@ class MyApp extends StatelessWidget {
                     return MnemonicPhraseScreen();
                   case RecoverWalletScreen.routeName:
                     return RecoverWalletScreen();
-                  case HomeScreen.routeName:
-                    return HomeScreen();
+                  case NavigationScreen.routeName:
+                    return NavigationScreen();
+                  // case HomeScreen.routeName:
+                  //   return HomeScreen();
                   default:
                     return SplashScreen();
                 }

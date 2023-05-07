@@ -19,6 +19,10 @@ class AuthController extends GetxController {
 
   var selectedIndex = 0.obs;
 
+  var selectedNetwork = 0.obs;
+  var selectedNetworkType = "Mainnet".obs;
+  var selectedNetworkLayer = "L1".obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();

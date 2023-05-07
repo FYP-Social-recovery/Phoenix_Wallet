@@ -15,11 +15,13 @@ const List<Map<String, dynamic>> networks = [
         "Name": "Ethereum",
         "ChainId": 1,
         "RpcUrl": "abc.com",
+        "FullName": "Ethereum Mainnet",
       },
       "L2": {
         "Name": "Arbitrum",
         "ChainId": 1,
         "RpcUrl": "abc.com",
+        "FullName": "Arbitrum Mainnet",
       },
     },
     "Testnet": {
@@ -27,11 +29,13 @@ const List<Map<String, dynamic>> networks = [
         "Name": "Georli",
         "ChainId": 1,
         "RpcUrl": "abc.com",
+        "FullName": "Ethereum Testnet",
       },
       "L2": {
         "Name": "Arbitrum Georli",
         "ChainId": 1,
         "RpcUrl": "abc.com",
+        "FullName": "Arbitrum Testnet",
       },
     },
   },

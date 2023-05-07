@@ -5,10 +5,12 @@ class TextFieldTwo extends StatelessWidget {
     super.key,
     required this.labelText,
     required this.controller,
+    this.hintText = "",
   });
 
   final String labelText;
   final TextEditingController controller;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,10 @@ class TextFieldTwo extends StatelessWidget {
           letterSpacing: 0.5,
         ),
         decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(
+            fontSize: 25,
+          ),
           labelText: labelText,
           labelStyle: const TextStyle(
             fontSize: 25,

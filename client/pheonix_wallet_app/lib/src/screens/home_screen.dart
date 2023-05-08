@@ -174,83 +174,211 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                "Not Registered",
-                style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFFFF6D00).withOpacity(0.2),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Color(0xFFFF6D00).withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 7,
+                    horizontal: 15,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            color: Colors.black38,
+                            size: 10,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            networks[authController.selectedNetwork.value]
+                                    [authController.selectedNetworkType.value][
+                                authController
+                                    .selectedNetworkLayer.value]["FullName"],
+                            style: TextStyle(
+                              color: Color(0xFF242424),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Balance",
+                        style: TextStyle(
+                          color: Color(0xFF000000),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        authController.balance.value.toString() +
+                            " " +
+                            authController.currency.value,
+                        style: TextStyle(
+                          color: Color(0xFF000000),
+                          fontSize: 40,
+                          fontWeight: FontWeight.w200,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "\$0.0 USD",
+                        style: TextStyle(
+                          color: Color(0xFF000000),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w200,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
                 height: 30,
               ),
-              Text(
-                "Public Key",
-                style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFFFF6D00).withOpacity(0.2),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Color(0xFFFF6D00).withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                authController.publicKey.value.substring(0, 4) +
-                    "...." +
-                    authController.publicKey.value
-                        .substring(authController.publicKey.value.length - 4),
-                style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Text(
-                "Balance",
-                style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                authController.balance.value.toString() +
-                    " " +
-                    authController.currency.value,
-                style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 40,
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                "\$0.0 USD",
-                style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 25,
-                  fontWeight: FontWeight.w200,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 7,
+                    horizontal: 15,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Public Key",
+                        style: TextStyle(
+                          color: Color(0xFF000000),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        authController.publicKey.value.substring(0, 4) +
+                            "...." +
+                            authController.publicKey.value.substring(
+                                authController.publicKey.value.length - 4),
+                        style: TextStyle(
+                          color: Color(0xFF000000),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w200,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
                 height: 50,
               ),
-              Text(
-                authController.network.value,
-                style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFF6D00).withOpacity(0.2),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Color(0xFFFF6D00).withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 7,
+                      horizontal: 15,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              color: Colors.black38,
+                              size: 10,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Node contract status",
+                              style: TextStyle(
+                                color: Color(0xFF242424),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Not yet registered. Please go to social recovery menu page and register a node contract to use social recovery feature.",
+                          style: TextStyle(
+                            color: Color(0xFF000000),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],

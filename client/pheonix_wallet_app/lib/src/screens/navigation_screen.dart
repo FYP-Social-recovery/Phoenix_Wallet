@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
-import 'package:pheonix_wallet_app/src/screens/social_recovery_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/social_recovery_menu_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/transaction_screen.dart';
-import '../components/component_home.dart';
 
 class NavigationScreen extends StatelessWidget {
   NavigationScreen({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class NavigationScreen extends StatelessWidget {
   final _bgColor = Color(0xFFF6F6F6);
 
   final List<Widget> pages = [
-    SocialRecoveryScreen(),
+    SocialRecoveryMenuScreen(),
     HomeScreen(),
     TransactionScreen(),
   ];

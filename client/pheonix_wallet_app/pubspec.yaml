@@ -20,6 +20,7 @@ dependencies:
   dart_bip32_bip44: ^0.2.0
   convert: ^3.1.1
   awesome_bottom_navigation: ^0.0.4
+  loading_animation_widget: ^1.2.0+4
 
 dev_dependencies:
   flutter_test:

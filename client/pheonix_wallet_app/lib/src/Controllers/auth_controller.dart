@@ -23,6 +23,8 @@ class AuthController extends GetxController {
   var selectedNetworkType = "Mainnet".obs;
   var selectedNetworkLayer = "L1".obs;
 
+  var loading = false.obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -51,6 +53,7 @@ class AuthController extends GetxController {
     publicKey.value = publicKeyTemp.toString();
     privateKey.value = privateKeyTemp;
     balance.value = 0.00;
+
     Get.toNamed(mnemonicPhraseScreen);
   }
 

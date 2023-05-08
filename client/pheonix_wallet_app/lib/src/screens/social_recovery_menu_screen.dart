@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 
 import '../components/component_home.dart';
@@ -60,7 +61,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                     CustomMenuItem(
                       icon: Icons.person,
                       label: "Node Registration",
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(registrationScreen);
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),

@@ -6,6 +6,7 @@ const String splashScreen = '/';
 const String mnemonicPhraseScreen = '/mnemonicPhraseScreen';
 const String recoverWalletScreen = '/recoverWalletScreen';
 const String navigationScreen = '/navigationScreen';
+const String registrationScreen = '/navigationScreen/registrationScreen';
 
 const List<Map<String, dynamic>> networks = [
   {

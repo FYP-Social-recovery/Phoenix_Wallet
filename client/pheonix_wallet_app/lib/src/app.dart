@@ -7,6 +7,7 @@ import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/navigation_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/mnemonic_phrase_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/recover_wallet_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/registration_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/splash_screen.dart';
 
 import 'controllers/settings_controller.dart';
@@ -84,6 +85,8 @@ class MyApp extends StatelessWidget {
                     return RecoverWalletScreen();
                   case NavigationScreen.routeName:
                     return NavigationScreen();
+                  case RegistrationScreen.routeName:
+                    return RegistrationScreen();
                   // case HomeScreen.routeName:
                   //   return HomeScreen();
                   default:

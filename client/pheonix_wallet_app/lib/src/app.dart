@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/controllers/app_binding.dart';
+import 'package:pheonix_wallet_app/src/screens/distribution_screens/add_shareholders_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/navigation_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/mnemonic_phrase_screen.dart';
@@ -87,6 +88,8 @@ class MyApp extends StatelessWidget {
                     return NavigationScreen();
                   case RegistrationScreen.routeName:
                     return RegistrationScreen();
+                  case AddShareholdersScreen.routeName:
+                    return AddShareholdersScreen();
                   // case HomeScreen.routeName:
                   //   return HomeScreen();
                   default:

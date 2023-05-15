@@ -6,11 +6,15 @@ class TextFieldTwo extends StatelessWidget {
     required this.labelText,
     required this.controller,
     this.hintText = "",
+    this.isEditable = true,
+    this.fontSize = 25,
   });
 
   final String labelText;
   final TextEditingController controller;
   final String hintText;
+  final bool isEditable;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +22,10 @@ class TextFieldTwo extends StatelessWidget {
         controller: controller,
         maxLines: 5,
         minLines: 1,
-        style: const TextStyle(
+        enabled: isEditable,
+        style: TextStyle(
           color: Colors.black,
-          fontSize: 25,
+          fontSize: fontSize,
           letterSpacing: 0.5,
         ),
         decoration: InputDecoration(

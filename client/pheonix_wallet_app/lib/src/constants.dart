@@ -9,6 +9,8 @@ const String navigationScreen = '/navigationScreen';
 const String registrationScreen = '/navigationScreen/menu/registrationScreen';
 const String addShareholdersScreen =
     '/navigationScreen/menu/distribution/addShareholdersScreen';
+const String shareHolderRequestsScreen =
+    '/navigationScreen/menu/distribution/shareHolderRequestsScreen';
 
 const List<Map<String, dynamic>> networks = [
   {

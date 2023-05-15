@@ -5,10 +5,12 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.buttonText,
     required this.onPressed,
+    this.color = const Color.fromRGBO(255, 109, 0, 1),
   });
 
   final String buttonText;
   final VoidCallback? onPressed;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +34,13 @@ class PrimaryButton extends StatelessWidget {
             style: ButtonStyle(
               elevation: MaterialStateProperty.all<double>(0),
               backgroundColor: MaterialStateProperty.all<Color>(
-                Color.fromRGBO(255, 109, 0, 1),
+                color,
               ),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                   side: BorderSide(
-                    color: Color.fromRGBO(255, 109, 0, 1),
+                    color: color,
                   ),
                 ),
               ),

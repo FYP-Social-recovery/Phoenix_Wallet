@@ -10,6 +10,7 @@ import 'package:pheonix_wallet_app/src/screens/mnemonic_phrase_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/recover_wallet_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/registration_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/splash_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/distribution_screens/shareholder_requests_screen.dart';
 
 import 'controllers/settings_controller.dart';
 import 'screens/settings_screens/settings_view.dart';
@@ -90,6 +91,8 @@ class MyApp extends StatelessWidget {
                     return RegistrationScreen();
                   case AddShareholdersScreen.routeName:
                     return AddShareholdersScreen();
+                  case ShareHolderRequestsScreen.routeName:
+                    return ShareHolderRequestsScreen();
                   // case HomeScreen.routeName:
                   //   return HomeScreen();
                   default:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
+import 'package:pheonix_wallet_app/src/controllers/controller_home.dart';
 
 import '../components/component_home.dart';
 
@@ -112,7 +113,15 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                     CustomMenuItem(
                       icon: Icons.person,
                       label: "Accept shareholder requests",
-                      onTap: () {},
+                      onTap: () {
+                        final WalletController walletController = Get.find();
+                        walletController.shareholderRequests.value = [
+                          "Ox123456f2a34567b3456c45dcb45a6d4",
+                          "Ox123456f2a34567b3456c45dcb45a6d4",
+                          "Ox123456f2a34567b3456c45dcb45a6d4",
+                        ];
+                        Get.toNamed(shareHolderRequestsScreen);
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),

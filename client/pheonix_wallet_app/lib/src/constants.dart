@@ -11,6 +11,8 @@ const String addShareholdersScreen =
     '/navigationScreen/menu/distribution/addShareholdersScreen';
 const String shareHolderRequestsScreen =
     '/navigationScreen/menu/distribution/shareHolderRequestsScreen';
+const String shareHolderStatusScreen =
+    '/navigationScreen/menu/distribution/shareHolderStatusScreen';
 
 const List<Map<String, dynamic>> networks = [
   {

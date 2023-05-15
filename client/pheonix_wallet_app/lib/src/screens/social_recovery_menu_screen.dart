@@ -76,7 +76,27 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                     CustomMenuItem(
                       icon: Icons.person,
                       label: "Shareholder status",
-                      onTap: () {},
+                      onTap: () {
+                        final WalletController walletController = Get.find();
+                        walletController.shareholderRequestStatus.value = [
+                          {
+                            "holder": 1,
+                            "pubKey": "Ox123456f2a34567b3456c45dcb45a6d4",
+                            "status": "ACCEPTED"
+                          },
+                          {
+                            "holder": 2,
+                            "pubKey": "Ox123456f2a34567b3456c45dcb45a6d4",
+                            "status": "PENDING"
+                          },
+                          {
+                            "holder": 3,
+                            "pubKey": "Ox123456f2a34567b3456c45dcb45a6d4",
+                            "status": "ACCEPTED"
+                          },
+                        ];
+                        Get.toNamed(shareHolderStatusScreen);
+                      },
                     ),
                     CustomMenuItem(
                       icon: Icons.person,

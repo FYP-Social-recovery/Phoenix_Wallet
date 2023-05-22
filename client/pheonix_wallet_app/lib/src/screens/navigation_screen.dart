@@ -14,8 +14,6 @@ class NavigationScreen extends StatelessWidget {
 
   final AuthController authController = Get.find();
 
-  final _bgColor = Color(0xFFF6F6F6);
-
   final List<Widget> pages = [
     SocialRecoveryMenuScreen(),
     HomeScreen(),
@@ -41,19 +39,22 @@ class NavigationScreen extends StatelessWidget {
         highlightedIcons: [
           Icon(
             Icons.category,
+            color: Colors.white,
           ),
           Icon(
             Icons.home,
+            color: Colors.white,
           ),
           Icon(
             Icons.send_rounded,
+            color: Colors.white,
           ),
         ],
         onTapped: (int value) {
           authController.selectedIndex.value = value;
         },
-        bodyBgColor: _bgColor,
-        highlightColor: Color(0xFFFF9944),
+        bodyBgColor: AppColors.backgroundRed,
+        highlightColor: AppColors.mainBlue,
         navFgColor: Colors.grey.withOpacity(0.5),
         navBgColor: Colors.white,
       ),

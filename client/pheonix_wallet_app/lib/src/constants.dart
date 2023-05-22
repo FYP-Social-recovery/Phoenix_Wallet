@@ -58,4 +58,6 @@ const List<Map<String, dynamic>> networks = [
 
 class AppColors {
   static Color mainBlue = Color(0xFF115DA9);
+  static Color backgroundRed = Color(0xFFF5F5F5);
+  static Color boxText = Color(0xFFADA2C3);
 }

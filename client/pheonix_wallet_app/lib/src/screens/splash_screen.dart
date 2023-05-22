@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
@@ -14,73 +15,120 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/Phoenix logo.png",
-                  fit: BoxFit.fitWidth,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                Obx(
-                  () => authController.splashScreenLoading.value
-                      ? Container(
-                          height: 40,
-                          width: 40,
-                          child: CircularProgressIndicator(
-                            color: Colors.orangeAccent[700],
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Image.asset(
+            "assets/waves upside.png",
+            fit: BoxFit.fitWidth,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Spacer(
+                        flex: 2,
+                      ),
+                      Column(
+                        children: [
+                          Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                width: 150,
+                                height: 150,
+                              ),
+                              Image.asset(
+                                "assets/Phoenix logo.png",
+                                width: 122,
+                                height: 120,
+                              ),
+                            ],
                           ),
-                        )
-                      : authController.loading.value
-                          ? LoadingAnimationWidget.staggeredDotsWave(
-                              color: Color(0xFFFF6D00),
-                              size: 70,
-                            )
-                          : Column(
-                              children: [
-                                Container(
-                                  height: 40,
-                                  width: 40,
-                                ),
-                                PrimaryButton(
-                                  buttonText: "Create Wallet",
-                                  onPressed: () async {
-                                    authController.loading.value = true;
-                                    await Future.delayed(Duration(seconds: 2));
-                                    await authController.createWallet();
-                                    authController.loading.value = false;
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                OutlineButton(
-                                  buttonText: "Recover Wallet",
-                                  onPressed: () {
-                                    Get.toNamed(recoverWalletScreen);
-                                  },
-                                ),
-                              ],
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Phoenix Wallet",
+                            style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                                color: AppColors.mainBlue,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
+                                fontStyle: FontStyle.italic,
+                              ),
                             ),
+                          ),
+                        ],
+                      ),
+                      Spacer(
+                        flex: 2,
+                      ),
+                      Obx(
+                        () => authController.splashScreenLoading.value
+                            ? LoadingAnimationWidget.staggeredDotsWave(
+                                color: AppColors.mainBlue,
+                                size: 70,
+                              )
+                            : authController.loading.value
+                                ? LoadingAnimationWidget.staggeredDotsWave(
+                                    color: AppColors.mainBlue,
+                                    size: 70,
+                                  )
+                                : Column(
+                                    children: [
+                                      PrimaryButton(
+                                        buttonText: "Create Wallet",
+                                        onPressed: () async {
+                                          authController.loading.value = true;
+                                          await Future.delayed(
+                                              Duration(seconds: 2));
+                                          await authController.createWallet();
+                                          authController.loading.value = false;
+                                        },
+                                        color: AppColors.mainBlue,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      OutlineButton(
+                                        buttonText: "Recover Wallet",
+                                        onPressed: () {
+                                          Get.toNamed(recoverWalletScreen);
+                                        },
+                                        color: AppColors.mainBlue,
+                                      ),
+                                    ],
+                                  ),
+                      ),
+                      Spacer(
+                        flex: 1,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

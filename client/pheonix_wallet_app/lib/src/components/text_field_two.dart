@@ -8,6 +8,18 @@ class TextFieldTwo extends StatelessWidget {
     this.hintText = "",
     this.isEditable = true,
     this.fontSize = 25,
+    this.fontWeight = FontWeight.normal,
+    this.fontColor = Colors.grey,
+    this.labelSize = 25,
+    this.labelWeight = FontWeight.normal,
+    this.labelColor = Colors.grey,
+    this.borderColor = Colors.grey,
+    this.contentPadding = const EdgeInsets.only(
+      left: 20,
+      top: 20,
+      bottom: 20,
+    ),
+    this.fontTextAlign = TextAlign.start,
   });
 
   final String labelText;
@@ -15,6 +27,14 @@ class TextFieldTwo extends StatelessWidget {
   final String hintText;
   final bool isEditable;
   final double? fontSize;
+  final FontWeight? fontWeight;
+  final double? labelSize;
+  final Color? fontColor;
+  final TextAlign fontTextAlign;
+  final FontWeight? labelWeight;
+  final Color? labelColor;
+  final Color borderColor;
+  final EdgeInsetsGeometry? contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -24,45 +44,45 @@ class TextFieldTwo extends StatelessWidget {
         minLines: 1,
         enabled: isEditable,
         style: TextStyle(
-          color: Colors.black,
+          color: fontColor,
           fontSize: fontSize,
           letterSpacing: 0.5,
+          fontWeight: fontWeight,
         ),
+        textAlign: fontTextAlign,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
             fontSize: 25,
           ),
           labelText: labelText,
-          labelStyle: const TextStyle(
-            fontSize: 25,
+          labelStyle: TextStyle(
+            color: labelColor,
+            fontSize: labelSize,
+            fontWeight: labelWeight,
           ),
-          contentPadding: const EdgeInsets.only(
-            left: 20,
-            top: 20,
-            bottom: 20,
-          ),
+          contentPadding: contentPadding,
           // prefixIcon: Icon(Icons.people),
-          border: const OutlineInputBorder(
+          border: OutlineInputBorder(
             //Outline border type for TextFeild
             borderRadius: BorderRadius.all(Radius.circular(30)),
             borderSide: BorderSide(
-              color: Color(0xFF575757),
+              color: borderColor,
               width: 1,
             ),
           ),
-          enabledBorder: const OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
             //Outline border type for TextFeild
             borderRadius: BorderRadius.all(Radius.circular(30)),
             borderSide: BorderSide(
-              color: Color(0xFF575757),
+              color: borderColor,
               width: 1,
             ),
           ),
-          focusedBorder: const OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(30)),
             borderSide: BorderSide(
-              color: Color(0xFF575757),
+              color: borderColor,
               width: 1,
             ),
           ),

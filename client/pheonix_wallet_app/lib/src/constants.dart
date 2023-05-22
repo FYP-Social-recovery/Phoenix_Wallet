@@ -1,4 +1,6 @@
 // route names
+import 'package:flutter/material.dart';
+
 const String sampleItemPage = '/sample_item';
 const String settingsPage = '/settings';
 
@@ -53,3 +55,7 @@ const List<Map<String, dynamic>> networks = [
     },
   },
 ];
+
+class AppColors {
+  static Color mainBlue = Color(0xFF115DA9);
+}

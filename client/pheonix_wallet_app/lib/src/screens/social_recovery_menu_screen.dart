@@ -101,7 +101,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                     CustomMenuItem(
                       icon: Icons.person,
                       label: "Distribute shares",
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(distributeSharesScreen1);
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),

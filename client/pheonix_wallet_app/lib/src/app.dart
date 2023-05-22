@@ -4,6 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/controllers/app_binding.dart';
 import 'package:pheonix_wallet_app/src/screens/distribution_screens/add_shareholders_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/distribution_screens/distribute_shares_screen_1.dart';
+import 'package:pheonix_wallet_app/src/screens/distribution_screens/distribute_shares_screen_2.dart';
+import 'package:pheonix_wallet_app/src/screens/distribution_screens/distribute_shares_screen_3.dart';
 import 'package:pheonix_wallet_app/src/screens/distribution_screens/shareholder_status_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/navigation_screen.dart';
@@ -96,6 +99,12 @@ class MyApp extends StatelessWidget {
                     return ShareHolderRequestsScreen();
                   case ShareHolderStatusScreen.routeName:
                     return ShareHolderStatusScreen();
+                  case DistributeSharesScreen1.routeName:
+                    return DistributeSharesScreen1();
+                  case DistributeSharesScreen2.routeName:
+                    return DistributeSharesScreen2();
+                  case DistributeSharesScreen3.routeName:
+                    return DistributeSharesScreen3();
                   // case HomeScreen.routeName:
                   //   return HomeScreen();
                   default:

@@ -28,14 +28,26 @@ class NavigationScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       bottomNavigationBar: AwesomeBottomNav(
         icons: [
-          Icons.category_outlined,
-          Icons.home_outlined,
-          Icons.send_outlined,
+          Icon(
+            Icons.category_outlined,
+          ),
+          Icon(
+            Icons.home_outlined,
+          ),
+          Icon(
+            Icons.send_outlined,
+          ),
         ],
         highlightedIcons: [
-          Icons.category,
-          Icons.home,
-          Icons.send_rounded,
+          Icon(
+            Icons.category,
+          ),
+          Icon(
+            Icons.home,
+          ),
+          Icon(
+            Icons.send_rounded,
+          ),
         ],
         onTapped: (int value) {
           authController.selectedIndex.value = value;

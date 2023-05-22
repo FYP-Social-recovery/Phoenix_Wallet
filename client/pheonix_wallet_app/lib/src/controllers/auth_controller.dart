@@ -17,7 +17,7 @@ class AuthController extends GetxController {
   var currency = "ETH".obs;
   var network = "Ethereum mainet".obs;
 
-  var selectedIndex = 0.obs;
+  var selectedIndex = 1.obs;
 
   var selectedNetwork = 0.obs;
   var selectedNetworkType = "Mainnet".obs;

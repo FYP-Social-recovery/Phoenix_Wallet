@@ -11,7 +11,7 @@ import 'package:pheonix_wallet_app/src/screens/distribution_screens/shareholder_
 import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/navigation_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/mnemonic_phrase_screen.dart';
-import 'package:pheonix_wallet_app/src/screens/recover_wallet_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/import_wallet_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/registration_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/splash_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/distribution_screens/shareholder_requests_screen.dart';
@@ -87,8 +87,8 @@ class MyApp extends StatelessWidget {
                     return SplashScreen();
                   case MnemonicPhraseScreen.routeName:
                     return MnemonicPhraseScreen();
-                  case RecoverWalletScreen.routeName:
-                    return RecoverWalletScreen();
+                  case ImportWalletScreen.routeName:
+                    return ImportWalletScreen();
                   case NavigationScreen.routeName:
                     return NavigationScreen();
                   case RegistrationScreen.routeName:

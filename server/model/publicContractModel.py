@@ -62,24 +62,4 @@ class PublicContractModel:
         #setting my contract address to deployed address  
         return 
     
-    #get a contract address if already registered
-    def getContractAddressFromPublicKey(owner_addr,private_addr):
-        c= PublicContractModel.connection(GlobalState.PUBLIC_CONTRACT_ABI,GlobalState.PUBLIC_CONTRACT_ADDRESS,owner_addr,private_addr)
-        print(owner_addr,"Checking contracts for ",GlobalState.PUBLIC_CONTRACT_ADDRESS)
-        nonce = PublicContractModel.w3.eth.getTransactionCount(owner_addr)
-        contract = c.caller({"from": owner_addr, "nonce": nonce}).getContractAddressByPublicAddress(owner_addr)
-       
-        print("Contract retrieved")
-        print("Contract:", contract)
-        return contract
-#check the username is exists 
-    def checkUserNameExist(userName,owner_addr,private_addr):
-        c= PublicContractModel.connection(GlobalState.PUBLIC_CONTRACT_ABI,GlobalState.PUBLIC_CONTRACT_ADDRESS,owner_addr,private_addr)
-        print(owner_addr,"checking user name validity for ",GlobalState.PUBLIC_CONTRACT_ADDRESS)
-        nonce = PublicContractModel.w3.eth.getTransactionCount(owner_addr)
-        result = c.caller({"from": owner_addr,"nonce":nonce}).isExists(userName)
-        print("UserName  checked")
-        print("Value:", result)
-        return result
-# PublicContractModel.deployPublicContract()
-#PublicContractModel.getContractAddressFromPublicKey(owner_addr=PublicContractModel.defaultPublicAddress,private_addr=PublicContractModel.defaultPrivateAddress)
+  

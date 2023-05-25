@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
+import 'package:pheonix_wallet_app/src/controllers/wallet_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   final AuthController authController = Get.find();
+  final WalletController walletController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 60,
+              height: MediaQuery.of(context).size.width * 0.15,
             ),
             Text(
               "Balance",
@@ -109,30 +112,62 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Eth",
-                  style: GoogleFonts.inter(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                Obx(() {
+                  return Text(
+                    walletController.currency.value,
+                    style: GoogleFonts.inter(
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
+                  );
+                }),
+                SizedBox(
+                  width: 3,
                 ),
-                Text(
-                  "1.234.567,90",
-                  style: GoogleFonts.inter(
-                    textStyle: TextStyle(
+                Obx(() {
+                  return Text(
+                    walletController.balance.value.toStringAsFixed(5),
+                    style: GoogleFonts.inter(
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  );
+                }),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: IconButton(
+                    splashRadius: 10,
+                    tooltip: "Refresh balance",
+                    onPressed: () async {
+                      await walletController.getBalance();
+                    },
+                    icon: Icon(
+                      Icons.refresh,
                       color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
+                      size: 15,
                     ),
                   ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     walletController.getBalance();
+                  //   },
+                  //   child: Icon(
+                  //     Icons.refresh,
+                  //     color: Colors.white,
+                  //     size: 15,
+                  //   ),
+                  // ),
                 ),
               ],
             ),
             SizedBox(
-              height: 70,
+              height: MediaQuery.of(context).size.width * 0.2,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -192,39 +227,111 @@ class HomeScreen extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        "Wallet Information",
-                        style: GoogleFonts.inter(
-                          textStyle: TextStyle(
-                            color: AppColors.mainBlue,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Obx(() {
+                            return Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Wallet Information",
+                                    style: GoogleFonts.inter(
+                                      textStyle: TextStyle(
+                                        color: AppColors.mainBlue,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                WalletInfoBox(
+                                  title: "Public Key",
+                                  data: authController.publicKey.value
+                                          .substring(0, 6) +
+                                      "..." +
+                                      authController.publicKey.value.substring(
+                                          authController
+                                                  .publicKey.value.length -
+                                              4),
+                                  onCopyTap: () async {
+                                    await Clipboard.setData(ClipboardData(
+                                        text: authController.publicKey.value));
+                                  },
+                                  icon: Icons.copy,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                WalletInfoBox(
+                                  title: "Social Recovery",
+                                  data: walletController.registered.value
+                                      ? walletController
+                                              .nodeContractAddress.value
+                                              .substring(0, 6) +
+                                          "..." +
+                                          walletController
+                                              .nodeContractAddress.value
+                                              .substring(walletController
+                                                      .nodeContractAddress
+                                                      .value
+                                                      .length -
+                                                  4) +
+                                          "\n" +
+                                          walletController.username.value
+                                      : "Not Registered",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                WalletInfoBox(
+                                  title: "Blockchain",
+                                  data: walletController.blockchain.value,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                WalletInfoBox(
+                                  title: "Network",
+                                  data: walletController.network.value,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                WalletInfoBox(
+                                  title: "Network type",
+                                  data: walletController
+                                      .selectedNetworkType.value,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                WalletInfoBox(
+                                  title: "Network Layer",
+                                  data: walletController
+                                              .selectedNetworkLayer.value ==
+                                          "L1"
+                                      ? "Layer 1"
+                                      : "Layer 2",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                WalletInfoBox(
+                                  title: "Explorer URL",
+                                  data: walletController.explorerURL.value,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            );
+                          }),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      WalletInfoBox(
-                        title: "Public Key",
-                        data: "0x25R65...45B",
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      WalletInfoBox(
-                        title: "Social Recovery",
-                        data: "Not Registered",
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      WalletInfoBox(
-                        title: "Blockchain",
-                        data: "Ethereum",
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                     ],
                   ),
@@ -585,10 +692,14 @@ class WalletInfoBox extends StatelessWidget {
     super.key,
     required this.title,
     required this.data,
+    this.icon = null,
+    this.onCopyTap,
   });
 
   final String title;
   final String data;
+  final IconData? icon;
+  final Function()? onCopyTap;
 
   @override
   Widget build(BuildContext context) {
@@ -597,36 +708,65 @@ class WalletInfoBox extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Row(
-          children: [
-            Container(
-              width: 120,
-              child: Text(
-                title,
-                style: GoogleFonts.rubik(
-                  textStyle: TextStyle(
-                    color: AppColors.boxText,
-                    fontSize: 13,
-                    fontWeight: FontWeight.normal,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Row(
+              children: [
+                Container(
+                  width: 120,
+                  child: Text(
+                    title,
+                    style: GoogleFonts.rubik(
+                      textStyle: TextStyle(
+                        color: AppColors.boxText,
+                        fontSize: 13,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Text(
-              data,
-              style: GoogleFonts.inter(
-                textStyle: TextStyle(
-                  color: AppColors.mainBlue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Text(
+                    data,
+                    maxLines: 2,
+                    style: GoogleFonts.inter(
+                      textStyle: TextStyle(
+                        color: AppColors.mainBlue,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
                 ),
-                fontStyle: FontStyle.italic,
-              ),
+                icon == null
+                    ? Container()
+                    : SizedBox(
+                        width: 15,
+                      ),
+              ],
             ),
-          ],
-        ),
+          ),
+          icon == null
+              ? Container()
+              : Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    splashColor: AppColors.mainBlue,
+                    splashRadius: 25,
+                    onPressed: onCopyTap,
+                    tooltip: "Copy to clipboard",
+                    icon: Icon(
+                      icon,
+                      color: AppColors.mainBlue,
+                      size: 15,
+                    ),
+                  ),
+                ),
+        ],
       ),
     );
   }

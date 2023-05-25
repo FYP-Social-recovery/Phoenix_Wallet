@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
@@ -123,26 +124,48 @@ class MnemonicPhraseScreen extends StatelessWidget {
                         //     );
                         //   }).toList(),
                         // ),
-                        TextFieldTwo(
-                          isEditable: false,
-                          labelText: "Mnemonic Phrase",
-                          controller: TextEditingController(
-                            text: authController.mnemonicPhrase.value,
-                          ),
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal,
-                          fontColor: Colors.black,
-                          fontTextAlign: TextAlign.center,
-                          labelColor: AppColors.mainBlue,
-                          labelSize: 11,
-                          labelWeight: FontWeight.w600,
-                          borderColor: AppColors.mainBlue,
-                          contentPadding: EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                            top: 40,
-                            bottom: 40,
-                          ),
+                        Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            TextFieldTwo(
+                              isEditable: false,
+                              labelText: "Mnemonic Phrase",
+                              controller: TextEditingController(
+                                text: authController.mnemonicPhrase.value,
+                              ),
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
+                              fontColor: Colors.black,
+                              fontTextAlign: TextAlign.center,
+                              labelColor: AppColors.mainBlue,
+                              labelSize: 11,
+                              labelWeight: FontWeight.w600,
+                              borderColor: AppColors.mainBlue,
+                              contentPadding: EdgeInsets.only(
+                                left: 20,
+                                right: 20,
+                                top: 40,
+                                bottom: 40,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: IconButton(
+                                splashRadius: 20,
+                                tooltip: "Copy to clipboard",
+                                onPressed: () async {
+                                  await Clipboard.setData(ClipboardData(
+                                      text:
+                                          authController.mnemonicPhrase.value));
+                                },
+                                icon: Icon(
+                                  Icons.copy,
+                                  color: AppColors.mainBlue,
+                                  size: 15,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         PrimaryButton(
                           buttonText: "Continue",

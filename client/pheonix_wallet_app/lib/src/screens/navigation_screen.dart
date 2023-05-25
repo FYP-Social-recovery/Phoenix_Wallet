@@ -1,8 +1,10 @@
 import 'package:awesome_bottom_navigation/awesome_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
+import 'package:pheonix_wallet_app/src/controllers/wallet_controller.dart';
 import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/social_recovery_menu_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/transaction_screen.dart';
@@ -13,6 +15,7 @@ class NavigationScreen extends StatelessWidget {
   static const routeName = navigationScreen;
 
   final AuthController authController = Get.find();
+  final WalletController walletController = Get.find();
 
   final List<Widget> pages = [
     SocialRecoveryMenuScreen(),
@@ -60,7 +63,12 @@ class NavigationScreen extends StatelessWidget {
       ),
       body: Obx(
         () => SafeArea(
-          child: pages[authController.selectedIndex.value],
+          child: walletController.loading.value
+              ? LoadingAnimationWidget.staggeredDotsWave(
+                  color: AppColors.mainBlue,
+                  size: 70,
+                )
+              : pages[authController.selectedIndex.value],
         ),
       ),
     );

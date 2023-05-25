@@ -98,9 +98,9 @@ class SplashScreen extends StatelessWidget {
                                         buttonText: "Create Wallet",
                                         onPressed: () async {
                                           authController.loading.value = true;
-                                          await Future.delayed(
-                                              Duration(seconds: 2));
+
                                           await authController.createWallet();
+
                                           authController.loading.value = false;
                                         },
                                         color: AppColors.mainBlue,
@@ -109,9 +109,9 @@ class SplashScreen extends StatelessWidget {
                                         height: 10,
                                       ),
                                       OutlineButton(
-                                        buttonText: "Recover Wallet",
+                                        buttonText: "Import Wallet",
                                         onPressed: () {
-                                          Get.toNamed(recoverWalletScreen);
+                                          Get.toNamed(importWalletScreen);
                                         },
                                         color: AppColors.mainBlue,
                                       ),

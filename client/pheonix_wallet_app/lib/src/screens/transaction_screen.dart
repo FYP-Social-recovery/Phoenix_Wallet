@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
+import 'package:pheonix_wallet_app/src/controllers/wallet_controller.dart';
 
 import '../components/component_home.dart';
 
@@ -9,6 +10,7 @@ class TransactionScreen extends StatelessWidget {
   TransactionScreen({Key? key}) : super(key: key);
 
   final AuthController authController = Get.find();
+  final WalletController walletController = Get.find();
   final TextEditingController textEditingController = TextEditingController();
 
   @override
@@ -49,10 +51,7 @@ class TransactionScreen extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          networks[authController.selectedNetwork.value]
-                                      [authController.selectedNetworkType.value]
-                                  [authController.selectedNetworkLayer.value]
-                              ["FullName"],
+                          walletController.network.value,
                           style: TextStyle(
                             color: Color(0xFF242424),
                             fontSize: 20,

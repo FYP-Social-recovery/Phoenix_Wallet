@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pheonix_wallet_app/src/components/home_panel_button.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 import 'package:pheonix_wallet_app/src/controllers/controller_home.dart';
@@ -13,187 +15,238 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TopHeaderBar(
-            title: "Menu",
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Image.asset(
+            "assets/transaction header image.png",
+            fit: BoxFit.fill,
+            width: MediaQuery.of(context).size.width,
+            height: 70,
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Node Registration",
-                      onTap: () {
-                        Get.toNamed(registrationScreen);
-                      },
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+                left: 15,
+                right: 15,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
+                    child: Image.asset(
+                      "assets/Phoenix logo mini circular.png",
+                      width: 40,
+                      height: 40,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    "Menu",
+                    style: GoogleFonts.inter(
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.notifications,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        "assets/user image.png",
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      HomePanelButton(
+                        image: "assets/node registration image.png",
+                        label: "Node registation",
+                        onTap: () {},
+                        size: 100,
+                      ),
+                      HomePanelButton(
+                        image: "assets/add gardians image.png",
+                        label: "Add Guardians",
+                        onTap: () {},
+                        size: 100,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      HomePanelButton(
+                        image: "assets/me as a guardian image.png",
+                        label: "Me as a Guardian",
+                        onTap: () {},
+                        size: 100,
+                      ),
+                      HomePanelButton(
+                        image: "assets/guardians status image.png",
+                        label: "Gurdian's Status",
+                        onTap: () {},
+                        size: 100,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundRed,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Image.asset(
+                          "assets/Line.png",
+                          width: 50,
+                          height: 4,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 5,
-                            right: 10,
-                          ),
-                          child: Text(
-                            "Wallet Owner Features",
-                            style: TextStyle(
-                              color: Color(0xFF000000),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  HomePanelButton(
+                                    image: "assets/distribute key image.png",
+                                    label: "Distribute Key",
+                                    onTap: () {},
+                                    size: 100,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  HomePanelButton(
+                                    image: "assets/recovery key image.png",
+                                    label: "Recovery Key",
+                                    onTap: () {},
+                                    size: 100,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 30),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      "assets/Danger.png",
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "You will be asked to provide a private email address in the above two processes.",
+                                        style: GoogleFonts.inter(
+                                          textStyle: TextStyle(
+                                            color: AppColors.mainRed,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ),
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Add shareholders",
-                      onTap: () {
-                        Get.toNamed(addShareholdersScreen);
-                      },
-                    ),
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Shareholder status",
-                      onTap: () {
-                        final WalletController walletController = Get.find();
-                        walletController.shareholderRequestStatus.value = [
-                          {
-                            "holder": 1,
-                            "pubKey": "Ox123456f2a34567b3456c45dcb45a6d4",
-                            "status": "ACCEPTED"
-                          },
-                          {
-                            "holder": 2,
-                            "pubKey": "Ox123456f2a34567b3456c45dcb45a6d4",
-                            "status": "PENDING"
-                          },
-                          {
-                            "holder": 3,
-                            "pubKey": "Ox123456f2a34567b3456c45dcb45a6d4",
-                            "status": "ACCEPTED"
-                          },
-                        ];
-                        Get.toNamed(shareHolderStatusScreen);
-                      },
-                    ),
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Distribute shares",
-                      onTap: () {
-                        Get.toNamed(distributeSharesScreen1);
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 5,
-                            right: 10,
-                          ),
-                          child: Text(
-                            "Shareholder features",
-                            style: TextStyle(
-                              color: Color(0xFF000000),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Accept shareholder requests",
-                      onTap: () {
-                        final WalletController walletController = Get.find();
-                        walletController.shareholderRequests.value = [
-                          "Ox123456f2a34567b3456c45dcb45a6d4",
-                          "Ox123456f2a34567b3456c45dcb45a6d4",
-                          "Ox123456f2a34567b3456c45dcb45a6d4",
-                        ];
-                        Get.toNamed(shareHolderRequestsScreen);
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 5,
-                            right: 10,
-                          ),
-                          child: Text(
-                            "Wallet recovery features",
-                            style: TextStyle(
-                              color: Color(0xFF000000),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Request for wallet recovery",
-                      onTap: () {},
-                    ),
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Recover request view",
-                      onTap: () {},
-                    ),
-                    CustomMenuItem(
-                      icon: Icons.person,
-                      label: "Recover wallet",
-                      onTap: () {},
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }

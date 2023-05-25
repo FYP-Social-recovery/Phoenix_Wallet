@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pheonix_wallet_app/src/components/home_panel_button.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 import 'package:pheonix_wallet_app/src/controllers/wallet_controller.dart';
@@ -766,59 +767,6 @@ class WalletInfoBox extends StatelessWidget {
                     ),
                   ),
                 ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomePanelButton extends StatelessWidget {
-  const HomePanelButton({
-    super.key,
-    required this.onTap,
-    required this.image,
-    required this.label,
-  });
-
-  final Function()? onTap;
-  final String image;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: AppColors.mainBlue,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Image.asset(
-                image,
-                width: 35,
-                height: 35,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 6,
-          ),
-          Text(
-            label,
-            style: GoogleFonts.inter(
-              textStyle: TextStyle(
-                color: AppColors.mainBlue,
-                fontSize: 10,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
         ],
       ),
     );

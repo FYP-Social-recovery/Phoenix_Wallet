@@ -71,10 +71,20 @@ class WalletController extends GetxController {
   }
 
   Future<void> checkNodeExistWithPublicKey() async {
-    NodeService nodeService = NodeService();
-    await nodeService.init2();
-    var result = await nodeService.ask("isExists", ["Alice"]);
-    registered.value = result[0];
-    print(registered.value);
+    // NodeService nodeService = NodeService();
+    // await nodeService.init2();
+
+    // AuthController authController = Get.find();
+
+    // var result = await nodeService.ask(
+    //     "getContractAddressByPublicAddress", [authController.publicKey.value]);
+
+    // if (result[0] == null) {
+    //   registered.value = false;
+    // } else {
+    //   registered.value = result[0];
+    // }
+
+    // print(registered.value);
   }
 }

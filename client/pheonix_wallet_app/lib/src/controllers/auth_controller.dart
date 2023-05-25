@@ -125,6 +125,7 @@ class AuthController extends GetxController {
 
       WalletController walletController = Get.find();
       await walletController.getBalance();
+      await walletController.checkNodeExistWithPublicKey();
     } catch (e) {
       Get.snackbar(
         "Wallet Import Failed!",

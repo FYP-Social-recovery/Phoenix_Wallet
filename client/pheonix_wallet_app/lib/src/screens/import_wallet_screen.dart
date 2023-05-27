@@ -114,7 +114,7 @@ class ImportWalletScreen extends StatelessWidget {
                             controller: textEditingController,
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
-                            fontColor: Colors.black,
+                            fontColor: AppColors.mainBlue,
                             fontTextAlign: TextAlign.center,
                             labelColor: AppColors.mainBlue,
                             labelSize: 11,

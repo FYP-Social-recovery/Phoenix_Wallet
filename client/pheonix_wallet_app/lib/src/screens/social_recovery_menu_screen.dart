@@ -20,7 +20,7 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
         Align(
           alignment: Alignment.topCenter,
           child: Image.asset(
-            "assets/transaction header image.png",
+            "assets/menu header image.png",
             fit: BoxFit.fill,
             width: MediaQuery.of(context).size.width,
             height: 70,

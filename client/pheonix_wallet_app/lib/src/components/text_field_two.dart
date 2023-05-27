@@ -13,6 +13,7 @@ class TextFieldTwo extends StatelessWidget {
     this.labelSize = 25,
     this.labelWeight = FontWeight.normal,
     this.labelColor = Colors.grey,
+    this.labelAlignment = FloatingLabelAlignment.start,
     this.borderColor = Colors.grey,
     this.contentPadding = const EdgeInsets.only(
       left: 20,
@@ -20,6 +21,10 @@ class TextFieldTwo extends StatelessWidget {
       bottom: 20,
     ),
     this.fontTextAlign = TextAlign.start,
+    this.borderRadius = 30,
+    this.suffix = false,
+    this.suffixText = "",
+    this.suffixStyle = const TextStyle(),
   });
 
   final String labelText;
@@ -33,8 +38,13 @@ class TextFieldTwo extends StatelessWidget {
   final TextAlign fontTextAlign;
   final FontWeight? labelWeight;
   final Color? labelColor;
+  final FloatingLabelAlignment labelAlignment;
   final Color borderColor;
   final EdgeInsetsGeometry? contentPadding;
+  final double borderRadius;
+  final bool suffix;
+  final String suffixText;
+  final TextStyle suffixStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +61,8 @@ class TextFieldTwo extends StatelessWidget {
         ),
         textAlign: fontTextAlign,
         decoration: InputDecoration(
+          suffixText: suffixText,
+          suffixStyle: suffixStyle,
           hintText: hintText,
           hintStyle: TextStyle(
             fontSize: 25,
@@ -61,11 +73,12 @@ class TextFieldTwo extends StatelessWidget {
             fontSize: labelSize,
             fontWeight: labelWeight,
           ),
+          floatingLabelAlignment: labelAlignment,
           contentPadding: contentPadding,
           // prefixIcon: Icon(Icons.people),
           border: OutlineInputBorder(
             //Outline border type for TextFeild
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             borderSide: BorderSide(
               color: borderColor,
               width: 1,
@@ -73,14 +86,14 @@ class TextFieldTwo extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             //Outline border type for TextFeild
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             borderSide: BorderSide(
               color: borderColor,
               width: 1,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             borderSide: BorderSide(
               color: borderColor,
               width: 1,

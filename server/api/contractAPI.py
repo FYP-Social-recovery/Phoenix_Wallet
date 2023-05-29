@@ -33,9 +33,11 @@ def deployPublicContract():
 
 #/node-contract/deploy
 
-@app.route('/node-contract/deploy', methods=['GET'])
+@app.route('/node-contract/deploy', methods=['post'])
 def nodeDeploy():
-    contractAddress=NodeContractController.deploy()
+    privateKey=request.form['prv']
+    publicKey=request.form['pub']
+    contractAddress=NodeContractController.deploy(publicKeyLocal=publicKey,privateKeyLocal=privateKey)
     return {"contractAddress":contractAddress},200
 
 

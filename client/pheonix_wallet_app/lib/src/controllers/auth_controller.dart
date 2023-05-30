@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:bip39/bip39.dart' as bip39;
-import 'package:pheonix_wallet_app/src/controllers/nodeService.dart';
+import 'package:pheonix_wallet_app/src/services/nodeService.dart';
 import 'package:web3dart/credentials.dart';
 import 'package:web3dart/crypto.dart';
 import 'dart:convert';

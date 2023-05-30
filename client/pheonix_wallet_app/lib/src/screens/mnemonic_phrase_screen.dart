@@ -99,8 +99,7 @@ class MnemonicPhraseScreen extends StatelessWidget {
                                 textStyle: TextStyle(
                                   color: AppColors.mainBlue,
                                   fontSize: 24,
-                                  fontWeight: FontWeight.w800,
-                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                               textAlign: TextAlign.center,

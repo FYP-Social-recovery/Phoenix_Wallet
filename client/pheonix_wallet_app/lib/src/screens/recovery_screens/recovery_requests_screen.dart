@@ -6,10 +6,10 @@ import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 import 'package:pheonix_wallet_app/src/controllers/controller_home.dart';
 import '../../components/component_home.dart';
 
-class ShareHolderRequestsScreen extends StatelessWidget {
-  ShareHolderRequestsScreen({Key? key}) : super(key: key);
+class RecoveryRequestsScreen extends StatelessWidget {
+  RecoveryRequestsScreen({Key? key}) : super(key: key);
 
-  static const routeName = shareHolderRequestsScreen;
+  static const routeName = recoveryRequestsScreen;
 
   final WalletController walletController = Get.find();
 
@@ -125,7 +125,7 @@ class ShareHolderRequestsScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "Guardian Requests",
+                              "Recovery Requests",
                               style: GoogleFonts.inter(
                                 textStyle: TextStyle(
                                   color: AppColors.mainBlue,

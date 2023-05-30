@@ -111,7 +111,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                       HomePanelButton(
                         image: "assets/node registration image.png",
                         label: "Node registation",
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(registrationScreen);
+                        },
                         size: 100,
                       ),
                       HomePanelButton(
@@ -134,13 +136,17 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                       HomePanelButton(
                         image: "assets/me as a guardian image.png",
                         label: "Me as a Guardian",
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(shareHolderRequestsScreen);
+                        },
                         size: 100,
                       ),
                       HomePanelButton(
                         image: "assets/guardians status image.png",
                         label: "Gurdian's Status",
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(shareHolderStatusScreen);
+                        },
                         size: 100,
                       ),
                     ],
@@ -199,7 +205,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                                   HomePanelButton(
                                     image: "assets/recovery key image.png",
                                     label: "Recovery Key",
-                                    onTap: () {},
+                                    onTap: () {
+                                      Get.toNamed(recoveryRequestsScreen);
+                                    },
                                     size: 100,
                                     shape: BoxShape.circle,
                                   ),

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
-import 'package:pheonix_wallet_app/src/controllers/nodeService.dart';
+import 'package:pheonix_wallet_app/src/services/nodeService.dart';
 import 'package:web3dart/web3dart.dart';
 
 import 'controller_home.dart';
@@ -29,6 +29,8 @@ class WalletController extends GetxController {
   var username = "".obs;
   var shareholderRequests = [""].obs;
   var shareholderRequestStatus = [{}].obs;
+
+  var usernameExists = false.obs;
 
   @override
   void onInit() {

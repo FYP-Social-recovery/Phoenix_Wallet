@@ -30,6 +30,8 @@ class WalletController extends GetxController {
   var shareholderRequests = [""].obs;
   var shareholderRequestStatus = [{}].obs;
 
+  var usernameExists = false.obs;
+
   @override
   void onInit() {
     changeBlockchainData();

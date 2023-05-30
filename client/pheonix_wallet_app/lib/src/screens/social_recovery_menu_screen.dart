@@ -111,7 +111,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                       HomePanelButton(
                         image: "assets/node registration image.png",
                         label: "Node registation",
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(registrationScreen);
+                        },
                         size: 100,
                       ),
                       HomePanelButton(

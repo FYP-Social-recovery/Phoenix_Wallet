@@ -115,7 +115,7 @@ class ShareHolderRequestsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 20),
+                            padding: const EdgeInsets.only(right: 50),
                             child: Image.asset(
                               "assets/me as a guardian red image.png",
                               width: 100,
@@ -125,7 +125,7 @@ class ShareHolderRequestsScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "Guardian's Requests",
+                              "Guardian Requests",
                               style: GoogleFonts.inter(
                                 textStyle: TextStyle(
                                   color: AppColors.mainBlue,
@@ -144,40 +144,33 @@ class ShareHolderRequestsScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        TextFieldTwo(
-                          labelText: "Guardian 1",
-                          controller: TextEditingController(),
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal,
-                          fontColor: AppColors.mainBlue,
-                          fontTextAlign: TextAlign.center,
-                          labelColor: AppColors.mainBlue,
-                          labelSize: 11,
-                          labelWeight: FontWeight.w600,
-                          labelAlignment: FloatingLabelAlignment.start,
-                          borderColor: AppColors.mainBlue,
-                          hintText: "0xfff....fff",
-                          borderRadius: 10,
-                          contentPadding: const EdgeInsets.only(left: 10),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          width: 150,
-                          child: PrimaryButton(
-                            buttonText: "Accept",
-                            onPressed: () {},
-                            color: Color.fromRGBO(7, 180, 1, 1),
-                          ),
-                        ),
-                      ],
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext, int) {
+                        return RequestBox(
+                          title: "0xfffg2f23d234fg233gf345gf34",
+                          subTitle: "Unknown",
+                          icon: Icons.check_rounded,
+                          color: AppColors.mainGreen,
+                          iconColor: AppColors.mainBlue,
+                          onPressed: () {},
+                        );
+                        // RequestBox(
+                        //   title: "0xfffg2f23d234fg233gf345gf34",
+                        //   subTitle: "Unknown",
+                        //   icon: Icons.close_rounded,
+                        //   color: AppColors.mainYellow,
+                        //   iconColor: AppColors.mainBlue,
+                        //   onPressed: () {},
+                        // )
+                      },
+                      separatorBuilder: (BuildContext, int) {
+                        return SizedBox(
+                          height: 15,
+                        );
+                      },
+                      itemCount: 2,
                     ),
-                  ),
-                  Spacer(
-                    flex: 2,
                   ),
                   Spacer(
                     flex: 2,

@@ -73,6 +73,9 @@ class AppColors {
   static Color mainRed = Color(0xFFA91111);
   static Color backgroundRed = Color(0xFFF5F5F5);
   static Color boxText = Color(0xFFADA2C3);
+  static Color boxTextPink = Color(0xFFFCDDEC);
+  static Color mainGreen = Color(0xFF61FF00);
+  static Color mainYellow = Color(0xFFFE9800);
 }
 
 class ApiConstants {

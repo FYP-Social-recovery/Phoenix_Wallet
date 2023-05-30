@@ -144,7 +144,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                       HomePanelButton(
                         image: "assets/guardians status image.png",
                         label: "Gurdian's Status",
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(shareHolderStatusScreen);
+                        },
                         size: 100,
                       ),
                     ],

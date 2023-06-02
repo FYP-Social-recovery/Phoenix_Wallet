@@ -68,3 +68,63 @@ class NodeContractModel:
     def connection(abi,contract_addr,owner_addr,p_key):
         c = NodeContractModel.w3.eth.contract(address=contract_addr, abi=abi)
         return c
+#Request shares from holders 
+    def requestShares(owner_addr,private_addr,user_name,generated_signed_otp,entered_signed_otp, nodeContractAddressLocal):
+        #signed msg
+        def to_32byte_hex(val):
+            return Web3.toHex(Web3.toBytes(val).rjust(32, b'\0'))
+        generated_msg_hash=Web3.toHex(generated_signed_otp.messageHash)
+        entered_msg_hash=Web3.toHex(entered_signed_otp.messageHash)
+        v, r, s = generated_signed_otp.v, to_32byte_hex(generated_signed_otp.r), to_32byte_hex(generated_signed_otp.s)
+        c= NodeContractModel.connection(GlobalState.NODE_CONTRACT_ABI,nodeContractAddressLocal,owner_addr,private_addr)
+        print(owner_addr,"Requesting the shares ",nodeContractAddressLocal)
+        nonce = NodeContractModel.w3.eth.getTransactionCount(owner_addr)
+        returnVal = c.functions.requestSharesFromHolders(user_name,generated_msg_hash,v, r, s,entered_msg_hash).buildTransaction({"from": owner_addr,"nonce": nonce})
+        # Sign the transaction
+        sign_store_contact = NodeContractModel.w3.eth.account.sign_transaction(returnVal, private_key=private_addr)
+        # Send the transaction
+        send_store_contact = NodeContractModel.w3.eth.send_raw_transaction(sign_store_contact.rawTransaction)
+        transaction_receipt = NodeContractModel.w3.eth.wait_for_transaction_receipt(send_store_contact)
+
+        status = transaction_receipt["status"]
+        #generate a list of tuples
+        print("Gas",transaction_receipt["gasUsed"] )
+        print("Shares requested:", status)
+        return status
+     
+#request vault hash by the third party 
+    def requestVaultHash(owner_addr,private_addr,user_name,generated_signed_otp,entered_signed_otp,nodeContractAddressLocal):
+        #signed msg
+        def to_32byte_hex(val):
+            return Web3.toHex(Web3.toBytes(val).rjust(32, b'\0'))
+        generated_msg_hash=Web3.toHex(generated_signed_otp.messageHash)
+        entered_msg_hash=Web3.toHex(entered_signed_otp.messageHash)
+        v, r, s = generated_signed_otp.v, to_32byte_hex(generated_signed_otp.r), to_32byte_hex(generated_signed_otp.s)
+        c= NodeContractModel.connection(GlobalState.NODE_CONTRACT_ABI,nodeContractAddressLocal,owner_addr,private_addr)
+        print(owner_addr,"Requesting and getting vault hash  ",nodeContractAddressLocal)
+        nonce = NodeContractModel.w3.eth.getTransactionCount(owner_addr)
+        vaultHash = c.caller({"from": owner_addr, "nonce": nonce}).requestVaultHashOfSecretOwner(user_name,generated_msg_hash,v, r, s,entered_msg_hash)
+        #print("Gas",transaction_receipt["gasUsed"] )
+        print("Vault hash  retrieved")
+        print("vault hash:", vaultHash)
+        return vaultHash
+
+     #OTP section
+    def sign_message(str_msg):
+        message = encode_defunct(text=str_msg)
+        private_key = GlobalState.PUBLIC_CONTRACT_OWNER_PRIVATE_KEY
+        account = Account.privateKeyToAccount(private_key)
+        # Sign the message using the account
+        signed_message = NodeContractModel.w3.eth.account.sign_message(message, private_key=account.privateKey)
+        return signed_message
+    
+#get contract address using public address 
+    def getEmailByUserName(owner_addr,private_addr, nodeContractAddressLocal,userName):
+        c= NodeContractModel.connection(GlobalState.NODE_CONTRACT_ABI,nodeContractAddressLocal,owner_addr,private_addr)
+        print(owner_addr,"Getting an email of the given user name  ",userName)
+        nonce = NodeContractModel.w3.eth.getTransactionCount(owner_addr)
+        email = c.caller({"from": owner_addr, "nonce": nonce}).getEmailOfUser(userName)
+        #print("Gas",transaction_receipt["gasUsed"] )
+        print("Requested Email retrieved")
+        print("Email", email)
+        return email

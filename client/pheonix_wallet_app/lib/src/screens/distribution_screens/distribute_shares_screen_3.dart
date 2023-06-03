@@ -191,7 +191,17 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                         ? Container(
                             height: 300,
                             child: controller == null
-                                ? Center(child: Text("Loading Camera..."))
+                                ? Center(
+                                    child: Text(
+                                      "Loading Camera ...",
+                                      style: TextStyle(
+                                        color: AppColors.mainBlueLight,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
                                 : !controller!.value.isInitialized
                                     ? Center(
                                         child: CircularProgressIndicator(),
@@ -205,7 +215,15 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
 
                     capturState == 2
                         ? image == null
-                            ? Text("No image captured")
+                            ? Text(
+                                "No image captured",
+                                style: TextStyle(
+                                  color: AppColors.mainBlueLight,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                textAlign: TextAlign.center,
+                              )
                             : Image.file(
                                 File(image!.path),
                                 height: 300,

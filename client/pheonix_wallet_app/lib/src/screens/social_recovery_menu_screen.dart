@@ -208,7 +208,7 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                                     image: "assets/recovery key image.png",
                                     label: "Recovery Key",
                                     onTap: () {
-                                      Get.toNamed(recoveryRequestsScreen);
+                                      Get.toNamed(recoveryMenuScreen);
                                     },
                                     size: 100,
                                     shape: BoxShape.circle,

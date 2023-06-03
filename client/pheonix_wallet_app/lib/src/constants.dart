@@ -21,6 +21,7 @@ const String distributeSharesScreen2 =
     '/navigationScreen/menu/distribution/distributeSharesScreen2';
 const String distributeSharesScreen3 =
     '/navigationScreen/menu/distribution/distributeSharesScreen3';
+const String recoveryMenuScreen = '/navigationScreen/menu/recovery';
 const String recoveryRequestsScreen =
     '/navigationScreen/menu/recovery/recoveryRequestsScreen';
 

@@ -29,7 +29,9 @@ class RecoveryMenuScreen extends StatelessWidget {
                 RecoveryMenuButton(
                   image: "assets/recovery key image.png",
                   label: "Initiate recovery",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(recoveryRequestScreen1);
+                  },
                 ),
                 SizedBox(
                   height: 15,

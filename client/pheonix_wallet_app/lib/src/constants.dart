@@ -24,6 +24,10 @@ const String distributeSharesScreen3 =
 const String recoveryMenuScreen = '/navigationScreen/menu/recovery';
 const String recoveryRequestsScreen =
     '/navigationScreen/menu/recovery/recoveryRequestsScreen';
+const String recoveryRequestScreen1 =
+    '/navigationScreen/menu/recovery/recoveryRequestScreen1';
+const String recoveryRequestScreen2 =
+    '/navigationScreen/menu/recovery/recoveryRequestScreen2';
 
 const List<String> networkTypes = ["Mainnet", "Testnet"];
 const List<String> networkLayers = ["L1", "L2"];

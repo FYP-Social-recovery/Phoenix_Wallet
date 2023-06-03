@@ -12,6 +12,8 @@ import 'package:pheonix_wallet_app/src/screens/home_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/navigation_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/mnemonic_phrase_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/import_wallet_screen.dart';
+import 'package:pheonix_wallet_app/src/screens/recovery_screens/recovery_request_screen_1.dart';
+import 'package:pheonix_wallet_app/src/screens/recovery_screens/recovery_request_screen_2.dart';
 import 'package:pheonix_wallet_app/src/screens/recovery_screens/recovery_requests_screen.dart';
 import 'package:pheonix_wallet_app/src/screens/recovery_screens/revocery_menu.dart';
 import 'package:pheonix_wallet_app/src/screens/registration_screen.dart';
@@ -111,6 +113,10 @@ class MyApp extends StatelessWidget {
                     return RecoveryRequestsScreen();
                   case RecoveryMenuScreen.routeName:
                     return RecoveryMenuScreen();
+                  case RecoveryRequestScreen1.routeName:
+                    return RecoveryRequestScreen1();
+                  case RecoveryRequestScreen2.routeName:
+                    return RecoveryRequestScreen2();
                   // case HomeScreen.routeName:
                   //   return HomeScreen();
                   default:

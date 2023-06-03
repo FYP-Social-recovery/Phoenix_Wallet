@@ -147,29 +147,32 @@ class ShareHolderStatusScreen extends StatelessWidget {
                     child: ListView.separated(
                       shrinkWrap: true,
                       itemBuilder: (BuildContext, int) {
-                        return RequestBox(
-                          title: "0xfffg2f23d234fg233gf345gf34",
-                          subTitle: "Unknown",
-                          icon: Icons.check_rounded,
-                          color: AppColors.mainGreen,
-                          iconColor: AppColors.mainBlue,
-                          onPressed: () {},
-                        );
-                        // RequestBox(
-                        //   title: "0xfffg2f23d234fg233gf345gf34",
-                        //   subTitle: "Unknown",
-                        //   icon: Icons.close_rounded,
-                        //   color: AppColors.mainYellow,
-                        //   iconColor: AppColors.mainBlue,
-                        //   onPressed: () {},
-                        // )
+                        if (int % 2 == 0) {
+                          return RequestBox(
+                            title: "0xfffg2f23d234fg233gf345gf34",
+                            subTitle: "Unknown",
+                            icon: Icons.check_rounded,
+                            color: AppColors.mainGreen,
+                            iconColor: AppColors.mainBlue,
+                            onPressed: () {},
+                          );
+                        } else {
+                          return RequestBox(
+                            title: "0xfffg2f23d234fg233gf345gf34",
+                            subTitle: "Unknown",
+                            icon: Icons.close_rounded,
+                            color: AppColors.mainYellow,
+                            iconColor: AppColors.mainBlue,
+                            onPressed: () {},
+                          );
+                        }
                       },
                       separatorBuilder: (BuildContext, int) {
                         return SizedBox(
                           height: 15,
                         );
                       },
-                      itemCount: 2,
+                      itemCount: 4,
                     ),
                   ),
                   Spacer(

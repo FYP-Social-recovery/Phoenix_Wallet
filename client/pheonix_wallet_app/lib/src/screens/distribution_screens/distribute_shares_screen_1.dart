@@ -14,65 +14,137 @@ class DistributeSharesScreen1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(walletController.shareholderRequests.value);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.mainBlue,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TopHeaderBar(
-              isBackAvailable: true,
-              title: "Distribute Shares",
-            ),
-            SizedBox(
-              height: 60,
-            ),
-            Text(
-              "Email Verification",
-              style: TextStyle(
-                color: Color.fromRGBO(255, 109, 0, 1),
-                fontSize: 35,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFieldTwo(
-                    controller: TextEditingController(text: ""),
-                    labelText: "Email Address",
-                    isEditable: true,
-                    fontSize: 25,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  PrimaryButton(
-                    buttonText: "Send OTP",
-                    onPressed: () {
-                      Get.toNamed(distributeSharesScreen2);
-                    },
-                  ),
-                  SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 40,
                     height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.7),
+                          blurRadius: 1,
+                          blurStyle: BlurStyle.outer,
+                          offset: Offset(2, 2),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: AppColors.mainBlue,
+                        size: 25,
+                      ),
+                    ),
                   ),
-                ],
+                ),
               ),
-            ),
-            Spacer(
-              flex: 2,
-            ),
-          ],
+              Spacer(
+                flex: 1,
+              ),
+              Text(
+                "Email Verification",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/Message.png",
+                      width: 83,
+                      height: 75,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextFieldTwo(
+                      labelText: "Enter a Username",
+                      controller: TextEditingController(),
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                      fontColor: Colors.white,
+                      fontTextAlign: TextAlign.center,
+                      labelColor: Colors.white,
+                      labelSize: 11,
+                      labelWeight: FontWeight.w600,
+                      labelAlignment: FloatingLabelAlignment.start,
+                      borderColor: Colors.white,
+                      hintText: "",
+                      borderRadius: 10,
+                      contentPadding: const EdgeInsets.only(left: 10),
+                    ),
+                    SizedBox(
+                      height: 35,
+                    ),
+                    Text(
+                      "This email should be a\nprivate one which can\nonly be accessed by\nyourself.",
+                      style: TextStyle(
+                        color: AppColors.mainBlueLight,
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 60,
+                    ),
+                    PrimaryButton(
+                      buttonText: "Proceed",
+                      onPressed: () {
+                        Get.toNamed(distributeSharesScreen2);
+                      },
+                      color: Color(0xFF007CFF).withOpacity(0.5),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "*This will require to recover the wallet",
+                      style: TextStyle(
+                        color: AppColors.mainBlueLight,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+              Spacer(
+                flex: 2,
+              ),
+            ],
+          ),
         ),
       ),
     );

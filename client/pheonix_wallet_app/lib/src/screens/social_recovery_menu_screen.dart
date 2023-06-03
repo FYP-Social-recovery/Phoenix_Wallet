@@ -198,7 +198,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                                   HomePanelButton(
                                     image: "assets/distribute key image.png",
                                     label: "Distribute Key",
-                                    onTap: () {},
+                                    onTap: () {
+                                      Get.toNamed(distributeSharesScreen1);
+                                    },
                                     size: 100,
                                     shape: BoxShape.circle,
                                   ),

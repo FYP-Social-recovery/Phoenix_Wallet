@@ -5,10 +5,10 @@ import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 import 'package:pheonix_wallet_app/src/controllers/controller_home.dart';
 import '../../components/component_home.dart';
 
-class DistributeSharesScreen1 extends StatelessWidget {
-  DistributeSharesScreen1({Key? key}) : super(key: key);
+class RecoveryRequestScreen1 extends StatelessWidget {
+  RecoveryRequestScreen1({Key? key}) : super(key: key);
 
-  static const routeName = distributeSharesScreen1;
+  static const routeName = recoveryRequestScreen1;
 
   final WalletController walletController = Get.find();
 
@@ -85,7 +85,7 @@ class DistributeSharesScreen1 extends StatelessWidget {
                       height: 30,
                     ),
                     TextFieldTwo(
-                      labelText: "Enter an Email",
+                      labelText: "Enter a Username",
                       controller: TextEditingController(),
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
@@ -104,7 +104,7 @@ class DistributeSharesScreen1 extends StatelessWidget {
                       height: 35,
                     ),
                     Text(
-                      "This email should be a\nprivate one which can\nonly be accessed by\nyourself.",
+                      "You will receive an\nOTP number to the\nemail associated\nwith the username.",
                       style: TextStyle(
                         color: AppColors.mainBlueLight,
                         fontSize: 16,
@@ -118,21 +118,9 @@ class DistributeSharesScreen1 extends StatelessWidget {
                     PrimaryButton(
                       buttonText: "Proceed",
                       onPressed: () {
-                        Get.toNamed(distributeSharesScreen2);
+                        Get.toNamed(recoveryRequestScreen2);
                       },
                       color: Color(0xFF007CFF).withOpacity(0.5),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "*This will require to recover the wallet",
-                      style: TextStyle(
-                        color: AppColors.mainBlueLight,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
                     ),
                     SizedBox(
                       height: 20,

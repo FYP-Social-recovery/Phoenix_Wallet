@@ -198,7 +198,9 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                                   HomePanelButton(
                                     image: "assets/distribute key image.png",
                                     label: "Distribute Key",
-                                    onTap: () {},
+                                    onTap: () {
+                                      Get.toNamed(distributeSharesScreen1);
+                                    },
                                     size: 100,
                                     shape: BoxShape.circle,
                                   ),
@@ -206,7 +208,7 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                                     image: "assets/recovery key image.png",
                                     label: "Recovery Key",
                                     onTap: () {
-                                      Get.toNamed(recoveryRequestsScreen);
+                                      Get.toNamed(recoveryMenuScreen);
                                     },
                                     size: 100,
                                     shape: BoxShape.circle,

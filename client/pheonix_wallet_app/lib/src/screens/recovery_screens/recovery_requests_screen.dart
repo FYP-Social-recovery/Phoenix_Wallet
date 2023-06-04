@@ -117,7 +117,7 @@ class RecoveryRequestsScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(right: 50),
                             child: Image.asset(
-                              "assets/me as a guardian red image.png",
+                              "assets/recovery request red image.png",
                               width: 100,
                               // height: 130,
                             ),

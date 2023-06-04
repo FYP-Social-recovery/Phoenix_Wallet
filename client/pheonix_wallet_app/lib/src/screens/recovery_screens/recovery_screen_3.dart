@@ -8,15 +8,14 @@ import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 import 'package:pheonix_wallet_app/src/controllers/controller_home.dart';
 import '../../components/component_home.dart';
 
-class DistributeSharesScreen3 extends StatefulWidget {
-  static const routeName = distributeSharesScreen3;
+class RecoveryScreen3 extends StatefulWidget {
+  static const routeName = recoveryScreen3;
 
   @override
-  _DistributeSharesScreen3State createState() =>
-      _DistributeSharesScreen3State();
+  _RecoveryScreen3State createState() => _RecoveryScreen3State();
 }
 
-class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
+class _RecoveryScreen3State extends State<RecoveryScreen3> {
   final WalletController walletController = Get.find();
 
   List<CameraDescription>? cameras; //list out the camera available
@@ -143,7 +142,7 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                 flex: 1,
               ),
               Text(
-                "Fingerprint Scan",
+                capturState == 3 ? "Recovered keys" : "Fingerprint Scan",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 36,
@@ -209,7 +208,7 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                                     : CameraPreview(controller!))
                         : Container(),
 
-                    //if capture state == 1
+                    //if capture state == 2
 
                     // Display Captured image
 
@@ -230,15 +229,55 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                               )
                         : Container(),
 
+                    //if capture state == 3
+
+                    // Display Recoverd Key
+
+                    capturState == 3
+                        ? Text(
+                            "Private Key :\n" +
+                                "0xsdfeafawedfx3xfq34f34f34f34f34f34xf34f34f",
+                            style: TextStyle(
+                              color: AppColors.mainBlueLight,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            textAlign: TextAlign.center,
+                          )
+                        : Container(),
+                    capturState == 3
+                        ? SizedBox(
+                            height: 15,
+                          )
+                        : Container(),
+                    capturState == 3
+                        ? Text(
+                            "Public Key :\n" +
+                                "0xsdfeafawedfx3xfq34f34f34f34f34f34xf34f34f",
+                            style: TextStyle(
+                              color: AppColors.mainBlueLight,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            textAlign: TextAlign.center,
+                          )
+                        : Container(),
+
                     SizedBox(
-                      height: capturState == 0 ? 60 : 30,
+                      height: capturState == 0
+                          ? 60
+                          : capturState == 3
+                              ? 60
+                              : 30,
                     ),
                     PrimaryButton(
                       buttonText: capturState == 0
                           ? "Proceed"
                           : capturState == 1
                               ? "Capture"
-                              : "Distribute",
+                              : capturState == 2
+                                  ? "Recover"
+                                  : "Finish",
                       onPressed: () async {
                         // Get.toNamed(distributeSharesScreen2);
                         if (capturState == 0) {
@@ -262,7 +301,11 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                           } catch (e) {
                             print(e); //show error
                           }
-                        } else {
+                        } else if (capturState == 2) {
+                          setState(() {
+                            capturState = 3;
+                          });
+                        } else if (capturState == 3) {
                           Get.back();
                           Get.back();
                           Get.back();
@@ -288,18 +331,6 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                           )
                         : Container(),
 
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "*This will require to recover the wallet",
-                      style: TextStyle(
-                        color: AppColors.mainBlueLight,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
                     SizedBox(
                       height: 20,
                     ),

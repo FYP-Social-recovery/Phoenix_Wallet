@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:pheonix_wallet_app/src/controllers/auth_controller.dart';
 import 'package:pheonix_wallet_app/src/controllers/controller_home.dart';
 import '../../components/component_home.dart';
 
-class DistributeSharesScreen1 extends StatelessWidget {
-  DistributeSharesScreen1({Key? key}) : super(key: key);
+class RecoveryScreen2 extends StatelessWidget {
+  RecoveryScreen2({Key? key}) : super(key: key);
 
-  static const routeName = distributeSharesScreen1;
+  static const routeName = recoveryScreen2;
 
   final WalletController walletController = Get.find();
 
@@ -61,7 +62,7 @@ class DistributeSharesScreen1 extends StatelessWidget {
                 flex: 1,
               ),
               Text(
-                "Email Verification",
+                "Enter OTP",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 36,
@@ -77,34 +78,49 @@ class DistributeSharesScreen1 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/Message.png",
+                      "assets/Password.png",
                       width: 83,
                       height: 75,
                     ),
                     SizedBox(
                       height: 30,
                     ),
-                    TextFieldTwo(
-                      labelText: "Enter an Email",
-                      controller: TextEditingController(),
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
-                      fontColor: Colors.white,
-                      fontTextAlign: TextAlign.center,
-                      labelColor: Colors.white,
-                      labelSize: 11,
-                      labelWeight: FontWeight.w600,
-                      labelAlignment: FloatingLabelAlignment.start,
-                      borderColor: Colors.white,
-                      hintText: "",
-                      borderRadius: 10,
-                      contentPadding: const EdgeInsets.only(left: 10),
+                    OtpTextField(
+                      numberOfFields: 5,
+                      borderColor: Color(0xFFFFFFFF),
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+
+                      focusedBorderColor: AppColors.mainGreen,
+                      decoration: InputDecoration(
+                        focusColor: AppColors.mainGreen,
+                      ),
+                      //set to true to show as box or false to show as dash
+                      showFieldAsBox: true,
+                      //runs when a code is typed in
+                      onCodeChanged: (String code) {
+                        //handle validation or checks here
+                      },
+                      //runs when every textfield is filled
+                      onSubmit: (String verificationCode) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                alignment: Alignment.center,
+                                title: Text("Verification Code"),
+                                content:
+                                    Text('Code entered is $verificationCode'),
+                              );
+                            });
+                      }, // end onSubmit
                     ),
                     SizedBox(
                       height: 35,
                     ),
                     Text(
-                      "This email should be a\nprivate one which can\nonly be accessed by\nyourself.",
+                      "One time password is\ngenerated and sended to\nyour email address",
                       style: TextStyle(
                         color: AppColors.mainBlueLight,
                         fontSize: 16,
@@ -118,21 +134,9 @@ class DistributeSharesScreen1 extends StatelessWidget {
                     PrimaryButton(
                       buttonText: "Proceed",
                       onPressed: () {
-                        Get.toNamed(distributeSharesScreen2);
+                        Get.toNamed(recoveryScreen3);
                       },
                       color: Color(0xFF007CFF).withOpacity(0.5),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "*This will require to recover the wallet",
-                      style: TextStyle(
-                        color: AppColors.mainBlueLight,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
                     ),
                     SizedBox(
                       height: 20,

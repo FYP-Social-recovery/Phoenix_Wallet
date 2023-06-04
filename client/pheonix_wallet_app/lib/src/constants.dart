@@ -28,6 +28,12 @@ const String recoveryRequestScreen1 =
     '/navigationScreen/menu/recovery/recoveryRequestScreen1';
 const String recoveryRequestScreen2 =
     '/navigationScreen/menu/recovery/recoveryRequestScreen2';
+const String recoveryScreen1 =
+    '/navigationScreen/menu/recovery/recoveryScreen1';
+const String recoveryScreen2 =
+    '/navigationScreen/menu/recovery/recoveryScreen2';
+const String recoveryScreen3 =
+    '/navigationScreen/menu/recovery/recoveryScreen3';
 
 const List<String> networkTypes = ["Mainnet", "Testnet"];
 const List<String> networkLayers = ["L1", "L2"];

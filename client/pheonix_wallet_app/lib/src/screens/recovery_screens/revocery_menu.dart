@@ -59,7 +59,9 @@ class RecoveryMenuScreen extends StatelessWidget {
                 RecoveryMenuButton(
                   image: "assets/Wallet.png",
                   label: "Recover Wallet",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(recoveryScreen1);
+                  },
                 ),
                 Spacer(flex: 1),
                 PrimaryButton(

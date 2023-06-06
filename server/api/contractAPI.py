@@ -28,7 +28,7 @@ def test():
 
 #public-contract/deploy
 
-@app.route('/public-contract/deploy',methods=['GET'])
+@app.route('/public-contract/deploy',methods=['post'])
 def deployPublicContract():
     PublicContractController.deploy()
     return {"Deploy":"True"},200
@@ -101,6 +101,11 @@ def getVaultHash():
     vaultHash=NodeContractController.getVaultHash(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generated_signed_message,entered_signed_otp= entered_signed_message)
     return {"vaultHash":vaultHash},200
 
+@app.route('/node-contract/get-fingerprint',methods=['POST'])
+def processFingerprint():
+    fingerprint=request.form['image']
+    print(fingerprint)
+    return {"Result":"True"},200
 
 
 #fingerprint APIs

@@ -16,7 +16,7 @@ class PublicContractModel:
 
         ## Windows - ../contract/compiled_code.json
         ## Linux - contract/compiled_code.json
-        with open(r"contract/compiled_code.json","r") as file:
+        with open(r"../contract/compiled_code.json","r") as file:
             compiled_sol = json.loads(file.read())
            
         # get bytecode

@@ -1,6 +1,8 @@
 // route names
 import 'package:flutter/material.dart';
 
+const String serverURL = 'b4c8-112-134-26-102.ngrok-free.app';
+
 const String sampleItemPage = '/sample_item';
 const String settingsPage = '/settings';
 

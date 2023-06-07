@@ -115,7 +115,11 @@ class RegistrationScreen extends StatelessWidget {
                               children: [
                                 TextFieldTwo(
                                   labelText: "Enter a Username",
-                                  controller: textEditingController,
+                                  controller: walletController.username.value !=
+                                          ""
+                                      ? TextEditingController(
+                                          text: walletController.username.value)
+                                      : textEditingController,
                                   fontSize: 20,
                                   fontWeight: FontWeight.normal,
                                   fontColor: AppColors.mainBlue,
@@ -129,6 +133,8 @@ class RegistrationScreen extends StatelessWidget {
                                   borderRadius: 10,
                                   contentPadding:
                                       const EdgeInsets.only(left: 10),
+                                  isEditable:
+                                      walletController.username.value == "",
                                 ),
                                 SizedBox(
                                   height: 5,
@@ -168,8 +174,8 @@ class RegistrationScreen extends StatelessWidget {
                             PrimaryButton(
                               buttonText: "Continue",
                               onPressed: () async {
-                                walletController.usernameExists.value =
-                                    !walletController.usernameExists.value;
+                                await walletController
+                                    .registerNode(textEditingController.text);
                               },
                             ),
                           ],

@@ -20,6 +20,7 @@ class AuthController extends GetxController {
   var mnemonicPhrase = "".obs;
   var privateKey = "".obs;
   var publicKey = "".obs;
+  var entrophy = "".obs;
 
   var selectedIndex = 1.obs;
 
@@ -58,6 +59,11 @@ class AuthController extends GetxController {
       mnemonicPhrase.value = randomMnemonic;
       publicKey.value = publicKeyTemp.toString();
       privateKey.value = privateKeyTemp;
+
+      if (randomMnemonic ==
+          "promote people van pencil december intact cement taste valid history onion fame") {
+        entrophy.value = "b'\xac4[\xc4\xd1S\x8a\xeb\tN\xf1\xf0\xcd\x86k)";
+      }
 
       WalletController walletController = Get.find();
       await walletController.getBalance();
@@ -123,9 +129,24 @@ class AuthController extends GetxController {
       publicKey.value = publicKeyTemp.toString();
       privateKey.value = privateKeyTemp;
 
+      if (phrase ==
+          "promote people van pencil december intact cement taste valid history onion fame") {
+        entrophy.value = "b'\xac4[\xc4\xd1S\x8a\xeb\tN\xf1\xf0\xcd\x86k)";
+      }
+
       WalletController walletController = Get.find();
       await walletController.getBalance();
-      await walletController.checkNodeExistWithPublicKey();
+      String contract = await walletController.checkNodeExistWithPublicKey();
+      if (contract != '0x0000000000000000000000000000000000000000') {
+        NodeService nodeService = NodeService();
+        await nodeService.initMethod();
+        var username = await nodeService.getUserName();
+        walletController.nodeContractAddress.value = contract;
+        walletController.username.value = username;
+
+        print(username);
+        print(contract);
+      }
     } catch (e) {
       Get.snackbar(
         "Wallet Import Failed!",

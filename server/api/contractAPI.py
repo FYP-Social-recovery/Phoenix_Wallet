@@ -5,9 +5,14 @@ from controller.otp_controller import OTPController
 from controller.nodeController import NodeContractController
 from controller.keyGenerationController import KeyGenerationController
 from controller.email_controller import EmailController
+from controller.finger_print_controller import FingerPrintController
 from web3 import Web3, HTTPProvider
 from eth_account.messages import encode_defunct  
-
+from utils.fuzzy_vault_utils.Constants import *
+from utils.symmetricEncryption import SymmetricEncryption
+from utils.fuzzy_vault_utils.Strings import *
+from controller.email_controller import EmailController
+from controller.fvss_controller import VSS_Controller
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -255,11 +260,72 @@ def getRejectedShareHolders():
 
 @app.route('/node-contract/distribute', methods=['POST'])
 def distribute():
+    otpContr=OTPController()
+    emailContr=EmailController()
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
-    status=NodeContractController.distribute(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"result":status},200
+    email=request.form['email']
+    entropy=request.form['entropy']
+    print("OTP verification successful")
+    print("Start Enrolling")
+    # Capture Enrolling fingerprint template
+    original_image_path = "../data/Original_fp.BMP"
+    original_image_template = FingerPrintController.read_image(original_image_path)
+    
+    # Preprocessing Fingerprint
+    preprocessed_image_output_path = "../data/Preprocessed_fp.jpg"
+
+    preprocessed_image = FingerPrintController.fingerprint_pipline(original_image_template, save_image=True, save_path=preprocessed_image_output_path)
+    
+    # Extract minutiea
+    print("Start minutiae extraction")
+    good_fp = False
+    
+    good_fp = FingerPrintController.capture_new_fp_xyt(preprocessed_image_output_path)
+    
+    ## If good fp enroll
+    ## else error
+    if not good_fp:
+        print("APP_RETRY_FP")
+        res=1
+    else:
+        print("Start vault generation")
+        # Generate vault
+        secret = entropy
+        fuzzy_vault = FingerPrintController.enroll_new_fingerprint(FP_TEMP_FOLDER + FP_OUTPUT_NAME + '.xyt', secret)
+        
+        print(fuzzy_vault)
+        print("\n\n")
+        
+        fuzzy_vault_bytes_object = SymmetricEncryption.convertStringToBytesObject(fuzzy_vault)
+        
+        print(fuzzy_vault_bytes_object)
+        print("\n\n")
+        
+        encrypted_fuzzy_vault,key  = SymmetricEncryption.encrypt_vault_128_bit_key(fuzzy_vault_bytes_object) # encrypted_fuzzy_vault,key,iv = SymmetricEncryption.encrypt_vault_256_bit_key(fuzzy_vault_bytes_object)
+        encrypted_fuzzy_vault = SymmetricEncryption.convertByteToString(encrypted_fuzzy_vault)
+        print(encrypted_fuzzy_vault)
+        print("\n\n")
+        
+        combined_key_bytes = key # SymmetricEncryption.concatanate2BytesObject(key,iv)
+        
+        combined_key = SymmetricEncryption.convertBytesObjectToInteger(combined_key_bytes)
+
+        #print(combined_key)
+        
+
+
+        VSS_client=VSS_Controller()
+        shares=VSS_client.get_generated_shares(int(combined_key))
+        #print(type(otpHash))
+        #print(type(encrypted_fuzzy_vault))
+        NodeContractController.addMyShares(shares=[shares[0],shares[1],shares[2]],publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+        
+        #change this function to store email
+        NodeContractController.distribute(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract,email=email,vault=encrypted_fuzzy_vault)
+        res=2
+    return {"result":res},200
 
 # @app.route('/node-contract/request-shares', methods=['POST'])
 # def requestShares():
@@ -365,15 +431,20 @@ def checkUserExists():
 @app.route('/otp/generate-otp', methods=['POST'])
 def generateOTP():
     email=request.form['email']
-    otp,otp_hash = OTPController.generateOTPHash()
-    EmailController.sendEmail(receiverEmail=email,OTP=otp)
+    otpContr=OTPController()
+    emailContr=EmailController()
+    otp,otp_hash = otpContr.generateOTPHash()
+    emailContr.sendEmail(receiverEmail=email,OTP=otp)
     return {"result":otp_hash}, 200
 
 
-@app.route('/otp/sign', methods=['POST'])
-def signOTP():
-    rtn = OTPController.add_sign()
-    return {"signed_otp": rtn}, 200
+@app.route('/otp/get-otp-hash', methods=['POST'])
+def getOTPHash():
+    otp=request.form['otp']
+    otpContr=OTPController()
+    rtn = otpContr.convert_Hash(otp)[1]
+    return {"result": rtn}, 200
+
 
 
 

@@ -171,16 +171,16 @@ class SplashScreen extends StatelessWidget {
                                             // );
                                             // print(result3.toString());
 
-                                            dynamic result =
-                                                await api.distribute(
-                                              true,
-                                              secretOwner["pk"],
-                                              secretOwner["sk"],
-                                              secretOwner["c"],
-                                              "mailavishka@gail.com",
-                                              en,
-                                            );
-                                            print(result);
+                                            // dynamic result =
+                                            //     await api.distribute(
+                                            //   true,
+                                            //   secretOwner["pk"],
+                                            //   secretOwner["sk"],
+                                            //   secretOwner["c"],
+                                            //   "mailavishka@gail.com",
+                                            //   en,
+                                            // );
+                                            // print(result);
 
                                             // String otpHash =
                                             //     "4332cd76590d0efdbd8d067acf531546da2ba0a67c538440e7defedbea48d1dc";
@@ -245,12 +245,12 @@ class SplashScreen extends StatelessWidget {
                                             // print(result4);
 
                                             ///////////////////////////////////////////////////////////////////
-                                            // authController.loading.value = true;
+                                            authController.loading.value = true;
 
-                                            // await authController.createWallet();
+                                            await authController.createWallet();
 
-                                            // authController.loading.value =
-                                            //     false;
+                                            authController.loading.value =
+                                                false;
                                           },
                                           color: AppColors.mainBlue,
                                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:pheonix_wallet_app/src/apis/api.dart';
 import 'package:pheonix_wallet_app/src/constants.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:pheonix_wallet_app/src/services/nodeService.dart';
@@ -41,29 +42,22 @@ class AuthController extends GetxController {
   Future<void> createWallet() async {
     loading.value = true;
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     privateKey.value = "";
+    publicKey.value = "";
+    mnemonicPhrase.value = "";
+    entrophy.value = "";
 
     try {
-      String randomMnemonic =
-          "promote people van pencil december intact cement taste valid history onion fame"; //bip39.generateMnemonic();
+      String randomMnemonic = await Api.generateMnemonicForNewAccount();
       print(randomMnemonic);
-      String seed = bip39.mnemonicToSeedHex(randomMnemonic);
-      Chain chain = Chain.seed(seed);
-      ExtendedKey extendedKey = chain.forPath("m/44'/60'/0'/0/0");
-      String privateKeyTemp = extendedKey.privateKeyHex().substring(2);
-      Credentials credentials =
-          EthPrivateKey.fromHex(extendedKey.privateKeyHex());
-      var publicKeyTemp = await credentials.extractAddress();
+      List<String> keyList = await Api.importWalletFromMnemonic(randomMnemonic);
 
       mnemonicPhrase.value = randomMnemonic;
-      publicKey.value = publicKeyTemp.toString();
-      privateKey.value = privateKeyTemp;
+      publicKey.value = keyList[1];
+      privateKey.value = keyList[0];
 
-      if (randomMnemonic ==
-          "promote people van pencil december intact cement taste valid history onion fame") {
-        entrophy.value = "b'\xac4[\xc4\xd1S\x8a\xeb\tN\xf1\xf0\xcd\x86k)";
-      }
+      entrophy.value = await Api.mnemonicToEntropy(randomMnemonic);
 
       WalletController walletController = Get.find();
       await walletController.getBalance();
@@ -102,8 +96,11 @@ class AuthController extends GetxController {
   Future<void> importWallet(String phrase) async {
     loading.value = true;
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     privateKey.value = "";
+    publicKey.value = "";
+    mnemonicPhrase.value = "";
+    entrophy.value = "";
 
     if (phrase.split(" ").length != 12) {
       Get.snackbar(
@@ -117,32 +114,24 @@ class AuthController extends GetxController {
     }
 
     try {
+      List<String> keyList = await Api.importWalletFromMnemonic(phrase);
+
       mnemonicPhrase.value = phrase;
-      String seed = bip39.mnemonicToSeedHex(phrase);
-      Chain chain = Chain.seed(seed);
-      ExtendedKey extendedKey = chain.forPath("m/44'/60'/0'/0/0");
-      String privateKeyTemp = extendedKey.privateKeyHex().substring(2);
-      Credentials credentials =
-          EthPrivateKey.fromHex(extendedKey.privateKeyHex());
-      var publicKeyTemp = await credentials.extractAddress();
+      publicKey.value = keyList[1];
+      privateKey.value = keyList[0];
 
-      publicKey.value = publicKeyTemp.toString();
-      privateKey.value = privateKeyTemp;
-
-      if (phrase ==
-          "promote people van pencil december intact cement taste valid history onion fame") {
-        entrophy.value = "b'\xac4[\xc4\xd1S\x8a\xeb\tN\xf1\xf0\xcd\x86k)";
-      }
+      entrophy.value = await Api.mnemonicToEntropy(phrase);
 
       WalletController walletController = Get.find();
       await walletController.getBalance();
-      String contract = await walletController.checkNodeExistWithPublicKey();
+      String contract = await Api.getContractAddressByPublicAddress(
+          publicKey.value, privateKey.value);
       if (contract != '0x0000000000000000000000000000000000000000') {
-        NodeService nodeService = NodeService();
-        await nodeService.initMethod();
-        var username = await nodeService.getUserName();
+        String username =
+            await Api.getUserName(publicKey.value, privateKey.value, contract);
         walletController.nodeContractAddress.value = contract;
         walletController.username.value = username;
+        walletController.registered.value = true;
 
         print(username);
         print(contract);

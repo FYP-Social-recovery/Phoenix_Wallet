@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class Api {
   // SplashScreen -> Create Wallet Button
-  Future<String> generateMnemonicForNewAccount() async {
+  static Future<String> generateMnemonicForNewAccount() async {
     try {
       var uri =
           Uri.https(serverURL, 'key-generation/generateMnemonicForNewAccount');
@@ -24,7 +24,7 @@ class Api {
     return "";
   }
 
-  Future<List<String>> importWalletFromMnemonic(String mnemonic) async {
+  static Future<List<String>> importWalletFromMnemonic(String mnemonic) async {
     try {
       var uri =
           Uri.https(serverURL, 'key-generation/import-wallet-from-mnemonic');
@@ -46,7 +46,7 @@ class Api {
     return [];
   }
 
-  Future<String> mnemonicToEntropy(String mnemonic) async {
+  static Future<String> mnemonicToEntropy(String mnemonic) async {
     try {
       var uri = Uri.https(serverURL, 'key-generation/mnemonic-to-entropy');
 
@@ -72,7 +72,7 @@ class Api {
   // importWalletFromMnemonic(String mnemonic) -> Developed in Splash Screen -> Create Wallet Button
   // mnemonicToEntropy(String mnemonic) -> Developed in Splash Screen -> Create Wallet Button
 
-  Future<String> getContractAddressByPublicAddress(
+  static Future<String> getContractAddressByPublicAddress(
       String publicKey, String privateKey) async {
     try {
       var uri = Uri.https(
@@ -86,9 +86,7 @@ class Api {
 
       if (response.statusCode == 200) {
         String contractAddress = json.decode(response.body)["result"];
-        if (contractAddress == "0x0000000000000000000000000000000000000000") {
-          return "";
-        }
+
         return contractAddress;
       }
     } catch (e) {
@@ -98,7 +96,7 @@ class Api {
     return "";
   }
 
-  Future<String> getUserName(
+  static Future<String> getUserName(
       String publicKey, String privateKey, String contractAddress) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/user-name');
@@ -111,8 +109,8 @@ class Api {
       final response = await http.post(uri, body: map);
 
       if (response.statusCode == 200) {
-        String entropy = json.decode(response.body)["result"];
-        return entropy;
+        String username = json.decode(response.body)["result"];
+        return username;
       }
     } catch (e) {
       print(e.toString());
@@ -122,15 +120,15 @@ class Api {
 
   // RegistrationScreen -> On register button press
 
-  Future<bool> checkUserExists(
-      String publicKey, String privateKey, String usename) async {
+  static Future<bool> checkUserExists(
+      String publicKey, String privateKey, String username) async {
     try {
       var uri = Uri.https(serverURL, 'public-contract/check-user-exists');
 
       var map = new Map<String, dynamic>();
       map['publicKey'] = publicKey;
       map['privateKey'] = privateKey;
-      map['userName'] = usename;
+      map['userName'] = username;
 
       final response = await http.post(uri, body: map);
 
@@ -144,7 +142,7 @@ class Api {
     return false;
   }
 
-  Future<String> deploy(String publicKey, String privateKey) async {
+  static Future<String> deploy(String publicKey, String privateKey) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/deploy');
 
@@ -165,8 +163,8 @@ class Api {
     return "";
   }
 
-  Future<String> register(String publicKey, String privateKey, String username,
-      String nodeContract) async {
+  static Future<String> register(String publicKey, String privateKey,
+      String username, String nodeContract) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/register');
 
@@ -191,8 +189,8 @@ class Api {
 
   // AddShareHoldersScreen -> On submit button press
 
-  Future<int> addTemporaryShareHolder(String publicKey, String privateKey,
-      String shareholder, String contractAddress) async {
+  static Future<int> addTemporaryShareHolder(String publicKey,
+      String privateKey, String shareholder, String contractAddress) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/add-temp-share-holder');
 
@@ -215,7 +213,7 @@ class Api {
     return 0;
   }
 
-  Future<int> makeHolderRequests(
+  static Future<int> makeHolderRequests(
       String publicKey, String privateKey, String contractAddress) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/make-shareholder-requests');
@@ -240,7 +238,7 @@ class Api {
 
   // ShareholderStatusScreen -> On page loading
 
-  Future<dynamic> getHolderStatus(
+  static Future<dynamic> getHolderStatus(
       String publicKey, String privateKey, String contractAddress) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/holder-status');
@@ -270,7 +268,7 @@ class Api {
 
   // ShareholderRequstScreen -> On page loading
 
-  Future<dynamic> checkRequestsForBeAHolder(
+  static Future<dynamic> checkRequestsForBeAHolder(
       String publicKey, String privateKey, String contractAddress) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/be-holder-requests');
@@ -295,7 +293,7 @@ class Api {
     return [];
   }
 
-  Future<dynamic> acceptInvitation(String publicKey, String privateKey,
+  static Future<dynamic> acceptInvitation(String publicKey, String privateKey,
       String contractAddress, String shareOwner) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/accept-invitation');
@@ -322,7 +320,7 @@ class Api {
 
   // DistributeShares -> On distribute button press
 
-  Future<int> distribute(
+  static Future<int> distribute(
     bool isVerifying,
     String publicKey,
     String privateKey,
@@ -362,7 +360,7 @@ class Api {
   }
 
   // Generate OTP for email
-  Future<String> generateOTP(String email) async {
+  static Future<String> generateOTP(String email) async {
     try {
       var uri = Uri.https(serverURL, 'otp/generate-otp');
 
@@ -383,7 +381,7 @@ class Api {
     return "";
   }
 
-  Future<String> getOTPHash(String otp) async {
+  static Future<String> getOTPHash(String otp) async {
     try {
       var uri = Uri.https(serverURL, 'otp/get-otp-hash');
 
@@ -403,25 +401,4 @@ class Api {
     }
     return "";
   }
-
-  // Future<dynamic> postUsers() async {
-  //   try {
-  //     var uri = Uri.https(serverURL, 'node-contract/deploy');
-
-  //     var map = new Map<String, dynamic>();
-  //     map['prv'] =
-  //         '6261ced5f7996c96aac73be45487cbf2f95afead4931e27a6657b101bb823029';
-  //     map['pub'] = '0x28e642748dcaec3e82ef9a7a145eca9c09227b82';
-
-  //     final response = await http.post(uri, body: map);
-
-  //     if (response.statusCode == 200) {
-  //       var responseData = json.decode(response.body)["result"];
-  //       return true;
-  //     }
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return false;
-  //   }
-  // }
 }

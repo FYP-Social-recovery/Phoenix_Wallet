@@ -3,6 +3,8 @@ from eth_account import Account
 from controller.publicContractController import PublicContractController
 from controller.otp_controller import OTPController
 from controller.nodeController import NodeContractController
+from controller.keyGenerationController import KeyGenerationController
+from controller.email_controller import EmailController
 from web3 import Web3, HTTPProvider
 from eth_account.messages import encode_defunct  
 
@@ -38,12 +40,10 @@ def deployPublicContract():
 
 @app.route('/node-contract/deploy', methods=['post'])
 def nodeDeploy():
-    privateKey=request.form['prv']
-    publicKey=request.form['pub']
-    print("Private key received "+privateKey)
-    print("Public Key received "+publicKey)
+    privateKey=request.form['privateKey']
+    publicKey=request.form['publicKey']
     contractAddress=NodeContractController.deploy(publicKeyLocal=publicKey,privateKeyLocal=privateKey)
-    return {"contractAddress":contractAddress},200
+    return {"result":contractAddress},200
 
 @app.route('/node-contract/request-shares', methods=['post'])
 def requestShares():
@@ -129,17 +129,27 @@ def getVaultHash():
 #node-contract/user-name
 #node-contract/email-by-user-name
 
+#key-generation/generateMnemonicForNewAccount
+#key-generation/import-wallet-from-mnemonic
+#key-generation/mnemonic-to-entropy
 
-#fingerprint APIs
+@app.route('/key-generation/generateMnemonicForNewAccount', methods=['GET'])
+def generateMnemonicForNewAccount():
+    mnemonic=KeyGenerationController.generateMnemonicForNewAccount()
+    return {"result":mnemonic},200
 
-#fvss APIs
+@app.route('/key-generation/import-wallet-from-mnemonic', methods=['POST'])
+def importWalletFromMnemonic():
+    mnemonic=request.form['mnemonic']
+    prv,pub=KeyGenerationController.importWalletFromMnemonic(mnemonicString=mnemonic)
+    return {"result":[prv,pub]},200
 
-#otp APIs 
+@app.route('/key-generation/mnemonic-to-entropy', methods=['POST'])
+def mnemonicToEntropy():
 
-@app.route('/node-contract/deploy', methods=['GET'])
-def nodeDeploy():
-    contractAddress=NodeContractController.deploy()
-    return {"contractAddress":contractAddress},200
+    mnemonic=request.form['mnemonic']
+    entropy=KeyGenerationController.mnemonicToEntropy(mnemonic=mnemonic)
+    return {"result":str(entropy)},200
 
 @app.route('/node-contract/register', methods=['POST'])
 def nodeRegister():
@@ -148,15 +158,15 @@ def nodeRegister():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     NodeContractController.register(userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {},200
+    return {"result":"registered"},200
 
-@app.route('/node-contract/be-holder-requests', methods=['GET'])
-def getHolderRequests():
+@app.route('/node-contract/be-holder-requests', methods=['POST'])
+def checkRequestsForBeAHolder():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     requests=NodeContractController.checkRequestsForBeAHolder(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"beHolderRequests":requests},200
+    return {"result":requests},200
 
 @app.route('/node-contract/accept-invitation', methods=['POST'])
 def acceptInvitation():
@@ -164,8 +174,8 @@ def acceptInvitation():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
-    status=NodeContractController.acceptInvitation(address==address,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"acceptance":status},200
+    status=NodeContractController.acceptInvitation(address=address,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+    return {"result":status},200
 
 @app.route('/node-contract/reject-invitation', methods=['POST'])
 def rejectInvitation():
@@ -174,7 +184,7 @@ def rejectInvitation():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     status=NodeContractController.rejectInvitation(address=address,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"acceptance":status},200
+    return {"result":status},200
 
 @app.route('/node-contract/share-requests', methods=['GET'])
 def getShareRequests():
@@ -182,7 +192,7 @@ def getShareRequests():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     shareRequests=NodeContractController.checkRequestsForShare(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"shareRequests":shareRequests},200
+    return {"result":shareRequests},200
 
 @app.route('/node-contract/release-share', methods=['POST'])
 def releaseShare():
@@ -191,7 +201,7 @@ def releaseShare():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     status=NodeContractController.releaseShare(address=address,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"status":status},200
+    return {"result":status},200
 
 @app.route('/node-contract/add-temp-share-holder', methods=['POST'])
 def addTempShareHolder():
@@ -200,7 +210,7 @@ def addTempShareHolder():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     status=NodeContractController.addTemporaryShareHolder(share_holder=shareHolder,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"status":status},200
+    return {"result":status},200
 
 @app.route('/node-contract/make-shareholder-requests', methods=['POST'])
 def makeShareHolderRequests():
@@ -208,7 +218,7 @@ def makeShareHolderRequests():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     status=NodeContractController.makeHolderRequests(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"status":status},200
+    return {"result":status},200
 
 @app.route('/node-contract/add-shares', methods=['POST'])
 def addShares():
@@ -219,29 +229,29 @@ def addShares():
     status=NodeContractController.addMyShares(shares=shares,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
     return {"status":status},200
 
-@app.route('/node-contract/share-holders', methods=['GET'])
+@app.route('/node-contract/share-holders', methods=['POST'])
 def getShareHolders():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     shareHolders=NodeContractController.getShareHolders(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"shareHolders":shareHolders},200
+    return {"result":shareHolders},200
 
-@app.route('/node-contract/requested-shareholders', methods=['GET'])
+@app.route('/node-contract/requested-shareholders', methods=['POST'])
 def getRequestedShareHolders():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     requestedShareHolders=NodeContractController.getRequestedShareHolders(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"requestedShareHolders":requestedShareHolders},200
+    return {"result":requestedShareHolders},200
 
-@app.route('/node-contract/rejected-share-holders', methods=['GET'])
+@app.route('/node-contract/rejected-share-holders', methods=['POST'])
 def getRejectedShareHolders():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     rejectedShareHolders=NodeContractController.getRejectedShareHolders(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"rejectedShareHolders":rejectedShareHolders},200
+    return {"result":rejectedShareHolders},200
 
 @app.route('/node-contract/distribute', methods=['POST'])
 def distribute():
@@ -249,59 +259,59 @@ def distribute():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     status=NodeContractController.distribute(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"status":status},200
+    return {"result":status},200
 
-@app.route('/node-contract/request-shares', methods=['POST'])
-def requestShares():
-    userName=request.form['userName']
-    generatedSignedOTP=request.form['generatedSignedOTP']
-    enteredSignedOTP=request.form['enteredSignedOTP']
-    publicKey=request.form['publicKey']
-    privateKey=request.form['privateKey']
-    nodeContract=request.form['nodeContract']
-    status=NodeContractController.requestShares(generated_signed_otp=generatedSignedOTP,entered_signed_otp=enteredSignedOTP, userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"status":status},200
+# @app.route('/node-contract/request-shares', methods=['POST'])
+# def requestShares():
+#     userName=request.form['userName']
+#     generatedSignedOTP=request.form['generatedSignedOTP']
+#     enteredSignedOTP=request.form['enteredSignedOTP']
+#     publicKey=request.form['publicKey']
+#     privateKey=request.form['privateKey']
+#     nodeContract=request.form['nodeContract']
+#     status=NodeContractController.requestShares(generated_signed_otp=generatedSignedOTP,entered_signed_otp=enteredSignedOTP, userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+#     return {"status":status},200
 
-@app.route('/node-contract/vault-hash', methods=['GET'])
-def getVaultHash():
-    userName=request.form['userName']
-    generatedSignedOTP=request.form['generatedSignedOTP']
-    enteredSignedOTP=request.form['enteredSignedOTP']
-    publicKey=request.form['publicKey']
-    privateKey=request.form['privateKey']
-    nodeContract=request.form['nodeContract']
-    vaultHash=NodeContractController.getVaultHash(generated_signed_otp=generatedSignedOTP,entered_signed_otp=enteredSignedOTP, userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"vaultHash":vaultHash},200
+# @app.route('/node-contract/vault-hash', methods=['GET'])
+# def getVaultHash():
+#     userName=request.form['userName']
+#     generatedSignedOTP=request.form['generatedSignedOTP']
+#     enteredSignedOTP=request.form['enteredSignedOTP']
+#     publicKey=request.form['publicKey']
+#     privateKey=request.form['privateKey']
+#     nodeContract=request.form['nodeContract']
+#     vaultHash=NodeContractController.getVaultHash(generated_signed_otp=generatedSignedOTP,entered_signed_otp=enteredSignedOTP, userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+#     return {"vaultHash":vaultHash},200
 
-@app.route('/node-contract/received-shares', methods=['GET'])
+@app.route('/node-contract/received-shares', methods=['POST'])
 def getReceivedShares():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     shares=NodeContractController.getReceivedShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"shares":shares},200
+    return {"result":shares},200
 
-@app.route('/node-contract/check-user-exists', methods=['GET'])
-def checkUserExists():
-    userName=request.form['userName']
-    status=NodeContractController.checkUserExists(userName=userName)
-    return {"status":status},200
+# @app.route('/node-contract/check-user-exists', methods=['GET'])
+# def checkUserExists():
+#     userName=request.form['userName']
+#     status=NodeContractController.checkUserExists(userName=userName)
+#     return {"status":status},200
 
-@app.route('/node-contract/my-state', methods=['GET'])
+@app.route('/node-contract/my-state', methods=['POST'])
 def getMyState():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     state=NodeContractController.getMyState(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"state":state},200
+    return {"result":state},200
 
-@app.route('/node-contract/holder-status', methods=['GET'])
+@app.route('/node-contract/holder-status', methods=['POST'])
 def getHolderStatus():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     holderStatus=NodeContractController.getHolderStatus(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"holderStatus":holderStatus},200
+    return {"result":holderStatus},200
 
 # @app.route('/node-contract/contract-address-by-public-address', methods=['GET'])
 # def getContractAddressByPublicAddress():
@@ -315,57 +325,57 @@ def getHolderStatus():
 #     return {"status":status},200
 
 
-@app.route('/node-contract/user-name', methods=['GET'])
+@app.route('/node-contract/user-name', methods=['POST'])
 def getUserName():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     userName=NodeContractController.getUserName(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"userName":userName},200
+    return {"result":userName},200
 
-@app.route('/node-contract/email-by-user-name', methods=['GET'])
+@app.route('/node-contract/email-by-user-name', methods=['POST'])
 def getEmail():
     userName=request.form['userName']
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     email=NodeContractController.getEmailByUserName(userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"email":email},200
+    return {"result":email},200
 
-@app.route('/public-contract/get-contract-address', methods=['GET'])
-def getContractAddress():
-    publicKeyLocal = request.args.get('publicKeyLocal')
-    privateKeyLocal = request.args.get('privateKeyLocal')
-    rtn=PublicContractController.getContractAddressByPublicAddress(publicKeyLocal, privateKeyLocal)
-    return {"contractAddress": rtn}, 200
+@app.route('/public-contract/get-contract-address-by-public-address', methods=['POST'])
+def getContractAddressByPublicAddress():
+    publicKey=request.form['publicKey']
+    privateKey=request.form['privateKey']
+    rtn=PublicContractController.getContractAddressByPublicAddress(publicKeyLocal=publicKey, privateKeyLocal=privateKey)
+    return {"result": rtn}, 200
 
-@app.route('/public-contract/check-user-exists', methods=['GET'])
-def checkUser():
-    userName = request.args.get('userName')
-    publicKeyLocal = request.args.get('publicKeyLocal')
-    privateKeyLocal = request.args.get('privateKeyLocal')
+@app.route('/public-contract/check-user-exists', methods=['POST'])
+def checkUserExists():
+    publicKey=request.form['publicKey']
+    privateKey=request.form['privateKey']
+    userName=request.form["userName"]
     rtn = PublicContractController.checkUserExists(
-        userName, publicKeyLocal, privateKeyLocal)
-    return {"val": rtn}, 200
+        userName, publicKey, privateKey)
+    return {"result": rtn}, 200
 
 
 #OTP controller APIs
-@app.route('/otp/generate-otp', methods=['GET'])
+
+
+@app.route('/otp/generate-otp', methods=['POST'])
 def generateOTP():
-    random_val, rtn = OTPController.generateOTPHash()
-    return {"val":random_val,"Hash": rtn}, 200
+    email=request.form['email']
+    otp,otp_hash = OTPController.generateOTPHash()
+    EmailController.sendEmail(receiverEmail=email,OTP=otp)
+    return {"result":otp_hash}, 200
 
 
-@app.route('/otp/sign', methods=['GET'])
+@app.route('/otp/sign', methods=['POST'])
 def signOTP():
     rtn = OTPController.add_sign()
     return {"signed_otp": rtn}, 200
 
-#Node controller APIs
-@app.route('/node-controller/deploy', methods=['GET'])
-def nodeDeploy():
-    rtn = NodeContractController.deploy()
-    return {"nodeContractAddress":rtn}, 200
+
 
 
 

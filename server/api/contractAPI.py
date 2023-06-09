@@ -50,59 +50,31 @@ def nodeDeploy():
     contractAddress=NodeContractController.deploy(publicKeyLocal=publicKey,privateKeyLocal=privateKey)
     return {"result":contractAddress},200
 
-@app.route('/node-contract/request-shares', methods=['post'])
+@app.route('/node-contract/request-shares', methods=['POST'])
 def requestShares():
-    privateKey=request.form['prv']
-    publicKey=request.form['pub']
-    contractAddress=request.form['contract']
-    userName=request.form['username']
-    generatedOTP=request.form['generatedOTP']
-    enteredOTP=request.form['enteredOTP']
+    privateKey=request.form['privateKey']
+    publicKey=request.form['publicKey']
+    contractAddress=request.form['nodeContract']
+    userName=request.form['userName']
+    generatedSignedOTP=request.form['generatedSignedOTP']
+    otp=request.form['OTP']
 
-    account = Account.privateKeyToAccount(privateKey) 
-    generated_message_text = generatedOTP
-    generated_message = encode_defunct(text=generated_message_text) 
+    OTP_client=OTPController()
+    entered_signed_otp=OTP_client.add_sign(otp)
 
-    entered_message_text = enteredOTP
-    entered_message = encode_defunct(text=entered_message_text) 
-
-    web3 = Web3(HTTPProvider('https://arb-goerli.g.alchemy.com/v2/kmaQkTzL0jVfzpP6t9J1R04Y0hr9GGJE'))      
-    generated_signed_message = web3.eth.account.sign_message(generated_message, private_key=account.privateKey)
-    entered_signed_message = web3.eth.account.sign_message(entered_message, private_key=account.privateKey)
-
-    #NodeContractController.requestShares(publicKeyLocal=Test.publicKeyThirdParty, privateKeyLocal=Test.privateKeyThirdParty, nodeContractAddressLocal=contract, userName="Alice",generated_signed_otp=signed_message,entered_signed_otp=signed_message)
-   
-
-    print("Private key received "+privateKey)
-    print("Public Key received "+publicKey)
-    result=NodeContractController.requestShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generated_signed_message,entered_signed_otp= entered_signed_message)
+    result=NodeContractController.requestShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generatedSignedOTP,entered_signed_otp= entered_signed_otp)
     return {"result":result},200
 
 @app.route('/node-contract/request-vault-hash', methods=['POST'])
 def getVaultHash():
-    privateKey=request.form['prv']
-    publicKey=request.form['pub']
-    contractAddress=request.form['contract']
-    userName=request.form['username']
-    generatedOTP=request.form['generatedOTP']
-    enteredOTP=request.form['enteredOTP']
+    privateKey=request.form['privateKey']
+    publicKey=request.form['publicKey']
+    contractAddress=request.form['nodeContract']
+    userName=request.form['userName']
+    generatedSignedOTP=request.form['generatedSignedOTP']
+    otp=request.form['OTP']
 
-    account = Account.privateKeyToAccount(privateKey) 
-    generated_message_text = generatedOTP
-    generated_message = encode_defunct(text=generated_message_text) 
 
-    entered_message_text = enteredOTP
-    entered_message = encode_defunct(text=entered_message_text) 
-
-    web3 = Web3(HTTPProvider('https://arb-goerli.g.alchemy.com/v2/kmaQkTzL0jVfzpP6t9J1R04Y0hr9GGJE'))      
-    generated_signed_message = web3.eth.account.sign_message(generated_message, private_key=account.privateKey)
-    entered_signed_message = web3.eth.account.sign_message(entered_message, private_key=account.privateKey)
-
-    #NodeContractController.requestShares(publicKeyLocal=Test.publicKeyThirdParty, privateKeyLocal=Test.privateKeyThirdParty, nodeContractAddressLocal=contract, userName="Alice",generated_signed_otp=signed_message,entered_signed_otp=signed_message)
-   
-
-    print("Private key received "+privateKey)
-    print("Public Key received "+publicKey)
     vaultHash=NodeContractController.getVaultHash(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generated_signed_message,entered_signed_otp= entered_signed_message)
     return {"result":vaultHash},200
 
@@ -137,6 +109,7 @@ def getVaultHash():
 #key-generation/generateMnemonicForNewAccount
 #key-generation/import-wallet-from-mnemonic
 #key-generation/mnemonic-to-entropy
+#key-generation/entropy-to-mnemonic
 
 @app.route('/key-generation/generateMnemonicForNewAccount', methods=['GET'])
 def generateMnemonicForNewAccount():
@@ -155,6 +128,12 @@ def mnemonicToEntropy():
     mnemonic=request.form['mnemonic']
     entropy=KeyGenerationController.mnemonicToEntropy(mnemonic=mnemonic)
     return {"result":str(entropy)},200
+
+@app.route('/key-generation/entropy-to-mnemonic', methods=['POST'])
+def entropyToMnemonic():
+    entropy=request.form['entropy']
+    mnemonic = KeyGenerationController.generateMnemonic(entropy.to_bytes(16, byteorder='big'))
+    return {"result":str(mnemonic)},200
 
 @app.route('/node-contract/register', methods=['POST'])
 def nodeRegister():
@@ -192,7 +171,7 @@ def rejectInvitation():
     return {"result":status},200
 
 @app.route('/node-contract/share-requests', methods=['POST'])
-def getShareRequests():
+def checkRequestsForShare():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
@@ -357,6 +336,79 @@ def getReceivedShares():
     shares=NodeContractController.getReceivedShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
     return {"result":shares},200
 
+
+@app.route('/node-contract/recover', methods=['POST'])
+def recover():
+    publicKey=request.form['publicKey']
+    privateKey=request.form['privateKey']
+    nodeContract=request.form['nodeContract']
+    userName=request.form['userName']
+    generatedSignedOTP=request.form['generatedSignedOTP']
+    otp=request.form['OTP']
+
+
+    shares = NodeContractController.getReceivedShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+    OTP_client=OTPController()
+    entered_signed_otp=OTP_client.add_sign(otp)
+    encryptedVault = NodeContractController.getVaultHash(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract,userName=userName,generated_signed_otp=generatedSignedOTP,entered_signed_otp=entered_signed_otp)
+    print(shares)
+    print("encryptedVault")
+    print(encryptedVault)
+
+    VSS_client=VSS_Controller()
+    combined_key = VSS_client.recoverSecret(shares)
+    print(combined_key)
+
+    # key,iv = SymmetricEncryption.deConcatanate2UnknownLenthBytesObject(SymmetricEncryption.convertIntegerToBytesObject(combined_key))
+    key = SymmetricEncryption.convertIntegerToBytesObject(combined_key,16)
+    print(key)
+    print(type(key))
+    print(type(encryptedVault))
+    decryptedVault = SymmetricEncryption.decrypt_vault_128(SymmetricEncryption.convertStringToBytesObject(encryptedVault),key) # decryptedVault = SymmetricEncryption.decrypt_vault(encryptedVault,key,iv)
+
+    print(decryptedVault)
+
+    log_path = VAULT_LOG_FOLDER + VAULT_LOG_FILENAME
+
+    with open(log_path, 'w') as file:
+        file.write(decryptedVault)
+    res=1
+    if (len(shares)!=0 and encryptedVault != ""):
+
+        print("Start Enrolling")
+        # Capture Enrolling fingerprint template
+        original_image_path = "../data/Original_fp.BMP"
+        original_image_template = FingerPrintController.read_image(original_image_path)
+        
+        # Preprocessing Fingerprint
+        preprocessed_image_output_path = "../data/Preprocessed_fp.jpg"
+
+        preprocessed_image = FingerPrintController.fingerprint_pipline(original_image_template, save_image=True, save_path=preprocessed_image_output_path)
+        
+        # Extract minutiea
+        print("Start minutiae extraction")
+        good_fp = False
+        
+        good_fp = FingerPrintController.capture_new_fp_xyt(preprocessed_image_output_path)
+        
+        ## If good fp enroll
+        ## else error
+        if not good_fp:
+            print(APP_RETRY_FP)
+            #self.open_err_dlg_err()
+            res=2
+        else:
+            print("Start Verifying")
+            # Reveal Secret
+            secret = FingerPrintController.verify_fingerprint(FP_TEMP_FOLDER + FP_OUTPUT_NAME + '.xyt')
+            res = secret
+            # mnemonic = KeyGenerationController.generateMnemonic(secret.to_bytes(16, byteorder='big'))
+            # print(mnemonic)
+            #self.on_submit_click(self)
+
+    #shares=NodeContractController.getReceivedShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+    return {"result":res},200
+
 # @app.route('/node-contract/check-user-exists', methods=['GET'])
 # def checkUserExists():
 #     userName=request.form['userName']
@@ -400,7 +452,7 @@ def getUserName():
     return {"result":userName},200
 
 @app.route('/node-contract/email-by-user-name', methods=['POST'])
-def getEmail():
+def getEmailByUserName():
     userName=request.form['userName']
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']

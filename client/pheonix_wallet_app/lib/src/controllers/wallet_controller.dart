@@ -35,8 +35,8 @@ class WalletController extends GetxController {
   var nodeContractAddress = "".obs;
   var username = "".obs;
 
-  var shareholderRequests = [""].obs;
-  var shareholderRequestStatus = [{}].obs;
+  var beShareholderRequests = [""].obs;
+  var shareholderRequestStatus = [[]].obs;
 
   var usernameExists = false.obs;
 
@@ -177,66 +177,5 @@ class WalletController extends GetxController {
     }
     Get.back();
     loading.value = false;
-  }
-
-  Future<void> addShareholders(List<String> shareHolders) async {
-    shareHolders = ["0x28e642748dcaec3e82ef9a7a145eca9c09227b82"];
-    print("addShareholders");
-
-    AuthController authController = Get.find();
-    NodeService nodeService = NodeService();
-    await nodeService.initMethod();
-
-    for (String shareHolder in shareHolders) {
-      var result = await nodeService.callFunction(
-          "addTemporaryShareHolders",
-          [EthereumAddress.fromHex(shareHolder)],
-          authController.privateKey.value);
-      print(result);
-    }
-
-    // [0x0000000000000000000000000000000000000000]
-  }
-
-  Future<void> addGurdians(List<String> shareHolders) async {
-    shareHolders = ["0x28e642748dcaec3e82ef9a7a145eca9c09227b82"];
-    print("addGurdians");
-
-    NodeService nodeService = NodeService();
-    await nodeService.initMethod();
-    AuthController authController = Get.find();
-
-    for (String shareHolder in shareHolders) {
-      var result = await nodeService.callFunction(
-          "addTemporaryShareHolders",
-          [EthereumAddress.fromHex(shareHolder)],
-          authController.privateKey
-              .value); //'58d0efedba9a8a61b2ac3f188dd079782e07aed904cdbc0e3340e073e85c7655'
-      print(result);
-    }
-  }
-
-  Future<void> refreshContractState() async {
-    print("refreshContractState");
-    NodeService nodeService = NodeService();
-    await nodeService.initMethod();
-    AuthController authController = Get.find();
-
-    var result = await nodeService.callFunction(
-        "refreshState", [], authController.privateKey.value);
-
-    print(result);
-  }
-
-  Future<void> gurdianStatus() async {
-    print("gurdianStatus");
-
-    await refreshContractState();
-    NodeService nodeService = NodeService();
-    await nodeService.initMethod();
-    AuthController authController = Get.find();
-
-    var result = await nodeService.ask("getMyState", []);
-    print(result);
   }
 }

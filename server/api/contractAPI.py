@@ -78,7 +78,7 @@ def requestShares():
     result=NodeContractController.requestShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generated_signed_message,entered_signed_otp= entered_signed_message)
     return {"result":result},200
 
-@app.route('/node-contract/request-vault-hash', methods=['post'])
+@app.route('/node-contract/request-vault-hash', methods=['POST'])
 def getVaultHash():
     privateKey=request.form['prv']
     publicKey=request.form['pub']
@@ -104,7 +104,7 @@ def getVaultHash():
     print("Private key received "+privateKey)
     print("Public Key received "+publicKey)
     vaultHash=NodeContractController.getVaultHash(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generated_signed_message,entered_signed_otp= entered_signed_message)
-    return {"vaultHash":vaultHash},200
+    return {"result":vaultHash},200
 
 
 
@@ -191,7 +191,7 @@ def rejectInvitation():
     status=NodeContractController.rejectInvitation(address=address,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
     return {"result":status},200
 
-@app.route('/node-contract/share-requests', methods=['GET'])
+@app.route('/node-contract/share-requests', methods=['POST'])
 def getShareRequests():
     publicKey=request.form['publicKey']
     privateKey=request.form['privateKey']
@@ -406,7 +406,12 @@ def getEmail():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     email=NodeContractController.getEmailByUserName(userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"result":email},200
+    
+    OTP_client=OTPController()
+    otp,generated_signed_otp=OTP_client.generateSignedOTP()
+    Email_client=EmailController()
+    Email_client.sendEmail(email,otp)
+    return {"result":[email,generated_signed_otp]},200
 
 @app.route('/public-contract/get-contract-address-by-public-address', methods=['POST'])
 def getContractAddressByPublicAddress():

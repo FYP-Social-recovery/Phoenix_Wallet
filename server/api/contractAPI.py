@@ -65,18 +65,18 @@ def requestShares():
     result=NodeContractController.requestShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generatedSignedOTP,entered_signed_otp= entered_signed_otp)
     return {"result":result},200
 
-@app.route('/node-contract/request-vault-hash', methods=['POST'])
-def getVaultHash():
-    privateKey=request.form['privateKey']
-    publicKey=request.form['publicKey']
-    contractAddress=request.form['nodeContract']
-    userName=request.form['userName']
-    generatedSignedOTP=request.form['generatedSignedOTP']
-    otp=request.form['OTP']
+# @app.route('/node-contract/request-vault-hash', methods=['POST'])
+# def getVaultHash():
+#     privateKey=request.form['privateKey']
+#     publicKey=request.form['publicKey']
+#     contractAddress=request.form['nodeContract']
+#     userName=request.form['userName']
+#     generatedSignedOTP=request.form['generatedSignedOTP']
+#     otp=request.form['OTP']
 
 
-    vaultHash=NodeContractController.getVaultHash(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generated_signed_message,entered_signed_otp= entered_signed_message)
-    return {"result":vaultHash},200
+#     vaultHash=NodeContractController.getVaultHash(publicKeyLocal=publicKey,privateKeyLocal=privateKey, nodeContractAddressLocal= contractAddress, userName= userName, generated_signed_otp= generated_signed_message,entered_signed_otp= entered_signed_message)
+#     return {"result":vaultHash},200
 
 
 
@@ -328,13 +328,13 @@ def distribute():
 #     vaultHash=NodeContractController.getVaultHash(generated_signed_otp=generatedSignedOTP,entered_signed_otp=enteredSignedOTP, userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
 #     return {"vaultHash":vaultHash},200
 
-@app.route('/node-contract/received-shares', methods=['POST'])
-def getReceivedShares():
-    publicKey=request.form['publicKey']
-    privateKey=request.form['privateKey']
-    nodeContract=request.form['nodeContract']
-    shares=NodeContractController.getReceivedShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
-    return {"result":shares},200
+# @app.route('/node-contract/received-shares', methods=['POST'])
+# def getReceivedShares():
+#     publicKey=request.form['publicKey']
+#     privateKey=request.form['privateKey']
+#     nodeContract=request.form['nodeContract']
+#     shares=NodeContractController.getReceivedShares(publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+#     return {"result":shares},200
 
 
 @app.route('/node-contract/recover', methods=['POST'])

@@ -130,6 +130,7 @@ class DistributeSharesScreen1 extends StatelessWidget {
 
                               walletController.otpHash.value = "";
                               walletController.otp.value = "";
+                              walletController.email.value = "";
 
                               dynamic result = await Api.generateOTP(
                                 textEditingController.text,
@@ -137,6 +138,8 @@ class DistributeSharesScreen1 extends StatelessWidget {
 
                               if (result != "") {
                                 walletController.otpHash.value = result;
+                                walletController.email.value =
+                                    textEditingController.text;
                                 Get.snackbar(
                                   "Successful!",
                                   "Successfully send the OTP.",

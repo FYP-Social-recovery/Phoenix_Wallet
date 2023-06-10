@@ -175,7 +175,7 @@ class ShareHolderRequestsScreen extends StatelessWidget {
                                         walletController
                                             .beShareholderRequests.value[int]);
                                 Get.snackbar(
-                                  "Accepted Successful",
+                                  "Successful!",
                                   "Successfully accepted the shareholder request.",
                                   colorText: AppColors.mainBlue,
                                 );

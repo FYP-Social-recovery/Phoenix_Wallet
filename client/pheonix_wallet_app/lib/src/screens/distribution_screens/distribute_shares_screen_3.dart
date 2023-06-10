@@ -277,7 +277,7 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                                   authController.publicKey.value,
                                   authController.privateKey.value,
                                   walletController.nodeContractAddress.value,
-                                  walletController.eamil.value,
+                                  walletController.email.value,
                                   authController.entrophy.value,
                                 );
 

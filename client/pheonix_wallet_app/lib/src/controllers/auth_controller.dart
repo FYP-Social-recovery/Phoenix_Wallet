@@ -83,7 +83,7 @@ class AuthController extends GetxController {
       return;
     } else {
       Get.snackbar(
-        "Wallet Creation Successful",
+        "Wallet Creation Successful!",
         "Successfully created the wallet.",
         colorText: AppColors.mainBlue,
       );
@@ -158,7 +158,7 @@ class AuthController extends GetxController {
       return;
     } else {
       Get.snackbar(
-        "Wallet Import successful",
+        "Wallet Import successful!",
         "Successfully imported the wallet.",
         colorText: AppColors.mainBlue,
       );

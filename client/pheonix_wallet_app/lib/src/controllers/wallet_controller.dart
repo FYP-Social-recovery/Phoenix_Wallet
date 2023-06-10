@@ -34,15 +34,17 @@ class WalletController extends GetxController {
   var registered = false.obs;
   var nodeContractAddress = "".obs;
   var username = "".obs;
-  var eamil = "".obs;
+  var email = "".obs;
 
   var beShareholderRequests = [""].obs;
   var shareholderRequestStatus = [[]].obs;
+  var shareRecoveryRequests = [""].obs;
 
   var usernameExists = false.obs;
 
   var otpHash = "".obs;
   var otp = "".obs;
+  var generatedSigendOTP = "".obs;
 
   @override
   void onInit() {
@@ -170,7 +172,7 @@ class WalletController extends GetxController {
           registered.value = true;
           username.value = usernameLocal;
           Get.snackbar(
-            "Contract Creation Successful",
+            "Contract Creation Successful!",
             "Successfully created the contract.",
             colorText: AppColors.mainBlue,
           );

@@ -433,7 +433,7 @@ class Api {
     return [];
   }
 
-  // RecoveryRequestScreen3 -> On Preceed
+  // RecoveryRequestScreen2 -> On Preceed
   static Future<dynamic> requestShares(
       String publicKey,
       String privateKey,
@@ -531,6 +531,7 @@ class Api {
 
   // RecoveryScreen3 -> On Preceed
   static Future<int> recover(
+    bool isVerifying,
     String publicKey,
     String privateKey,
     String contractAddress,
@@ -538,6 +539,10 @@ class Api {
     String generatedSigendOTP,
     String OTP,
   ) async {
+    // default isVerifying true
+    if (!isVerifying) {
+      return 3;
+    }
     try {
       var uri = Uri.https(serverURL, 'node-contract/request-shares');
 
@@ -556,6 +561,7 @@ class Api {
 
         // 1 - error
         // 2 - not good fp
+        // 3 - not verifying
         // else secret (entrophy)
 
         return result;

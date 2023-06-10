@@ -401,4 +401,193 @@ class Api {
     }
     return "";
   }
+
+  // RecoveryRequestScreen1 -> On Preceed
+  static Future<List<String>> getEmailByUserName(
+    String publicKey,
+    String privateKey,
+    String contractAddress,
+    String username,
+  ) async {
+    try {
+      var uri = Uri.https(serverURL, 'node-contract/email-by-user-name');
+
+      var map = new Map<String, dynamic>();
+      map['publicKey'] = publicKey;
+      map['privateKey'] = privateKey;
+      map['nodeContract'] = contractAddress;
+      map['userName'] = username;
+
+      final response = await http.post(uri, body: map);
+
+      if (response.statusCode == 200) {
+        List<String> result =
+            json.decode(response.body)["result"]; //[email, generatedSigendOTP]
+
+        return result;
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+    return [];
+  }
+
+  // RecoveryRequestScreen3 -> On Preceed
+  static Future<dynamic> requestShares(
+      String publicKey,
+      String privateKey,
+      String contractAddress,
+      String username,
+      String generatedSigendOTP,
+      String OTP) async {
+    try {
+      var uri = Uri.https(serverURL, 'node-contract/request-shares');
+
+      var map = new Map<String, dynamic>();
+      map['publicKey'] = publicKey;
+      map['privateKey'] = privateKey;
+      map['nodeContract'] = contractAddress;
+      map['userName'] = username;
+      map['generatedSigendOTP'] = generatedSigendOTP;
+      map['OTP'] = OTP;
+
+      final response = await http.post(uri, body: map);
+
+      if (response.statusCode == 200) {
+        dynamic result = json.decode(response.body)["result"];
+
+        return result;
+      }
+    } catch (e) {
+      print(e.toString());
+      return 0;
+    }
+    return 0;
+  }
+
+  // RecoveryRequestsScreen -> On page load
+  static Future<List<String>> checkRequestsForShare(
+    String publicKey,
+    String privateKey,
+    String contractAddress,
+  ) async {
+    try {
+      var uri = Uri.https(serverURL, 'node-contract/share-requests');
+
+      var map = new Map<String, dynamic>();
+      map['publicKey'] = publicKey;
+      map['privateKey'] = privateKey;
+      map['nodeContract'] = contractAddress;
+
+      final response = await http.post(uri, body: map);
+
+      if (response.statusCode == 200) {
+        List<String> recoveryRequestsList =
+            json.decode(response.body)["result"];
+
+        return recoveryRequestsList;
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+    return [];
+  }
+
+  // On accept button press
+  static Future<dynamic> releaseShare(
+    String publicKey,
+    String privateKey,
+    String contractAddress,
+    String address,
+  ) async {
+    try {
+      var uri = Uri.https(serverURL, 'node-contract/release-share');
+
+      var map = new Map<String, dynamic>();
+      map['publicKey'] = publicKey;
+      map['privateKey'] = privateKey;
+      map['nodeContract'] = contractAddress;
+      map['address'] = address;
+
+      final response = await http.post(uri, body: map);
+
+      if (response.statusCode == 200) {
+        dynamic result = json.decode(response.body)["result"];
+
+        return result;
+      }
+    } catch (e) {
+      print(e.toString());
+      return 0;
+    }
+    return 0;
+  }
+
+  // RecoveryScreen1 -> On Preceed
+
+  // getEmailByUserName
+
+  // RecoveryScreen3 -> On Preceed
+  static Future<int> recover(
+    String publicKey,
+    String privateKey,
+    String contractAddress,
+    String username,
+    String generatedSigendOTP,
+    String OTP,
+  ) async {
+    try {
+      var uri = Uri.https(serverURL, 'node-contract/request-shares');
+
+      var map = new Map<String, dynamic>();
+      map['publicKey'] = publicKey;
+      map['privateKey'] = privateKey;
+      map['nodeContract'] = contractAddress;
+      map['userName'] = username;
+      map['generatedSigendOTP'] = generatedSigendOTP;
+      map['OTP'] = OTP;
+
+      final response = await http.post(uri, body: map);
+
+      if (response.statusCode == 200) {
+        int result = json.decode(response.body)["result"];
+
+        // 1 - error
+        // 2 - not good fp
+        // else secret (entrophy)
+
+        return result;
+      }
+    } catch (e) {
+      print(e.toString());
+      return 0;
+    }
+    return 0;
+  }
+
+  // after recovering
+  static Future<String> entrophyToMnemonic(
+    String entrophy,
+  ) async {
+    try {
+      var uri = Uri.https(serverURL, 'key-generation/entropy-to-mnemonic');
+
+      var map = new Map<String, dynamic>();
+      map['entrophy'] = entrophy;
+
+      final response = await http.post(uri, body: map);
+
+      if (response.statusCode == 200) {
+        String mnemonic = json.decode(response.body)["result"];
+
+        return mnemonic;
+      }
+    } catch (e) {
+      print(e.toString());
+      return "";
+    }
+    return "";
+  }
 }

@@ -34,11 +34,15 @@ class WalletController extends GetxController {
   var registered = false.obs;
   var nodeContractAddress = "".obs;
   var username = "".obs;
+  var eamil = "".obs;
 
   var beShareholderRequests = [""].obs;
   var shareholderRequestStatus = [[]].obs;
 
   var usernameExists = false.obs;
+
+  var otpHash = "".obs;
+  var otp = "".obs;
 
   @override
   void onInit() {

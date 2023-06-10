@@ -248,7 +248,7 @@ class AddShareholdersScreen extends StatelessWidget {
                         );
 
                         Get.snackbar(
-                          "Successfully Added",
+                          "Successfull!",
                           "Successfully Sent Gurdian Requests.",
                           colorText: AppColors.mainBlue,
                         );

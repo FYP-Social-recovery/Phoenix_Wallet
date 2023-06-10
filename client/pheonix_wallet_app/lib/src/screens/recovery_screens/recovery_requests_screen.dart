@@ -177,12 +177,14 @@ class RecoveryRequestsScreen extends StatelessWidget {
                                   "Successful",
                                   "Successfully accepted the share recovery request.",
                                   colorText: AppColors.mainBlue,
+                                  backgroundColor: Colors.white70,
                                 );
                               } else {
                                 Get.snackbar(
                                   "Failed!",
                                   "Something is wrong. Please try again.",
                                   colorText: AppColors.mainRed,
+                                  backgroundColor: Colors.white70,
                                 );
                               }
 

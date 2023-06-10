@@ -132,9 +132,9 @@ class ImportWalletScreen extends StatelessWidget {
                               buttonText: "Continue",
                               onPressed: () async {
                                 await authController
-                                    // .importWallet(textEditingController.text);
-                                    .importWallet(
-                                        "promote people van pencil december intact cement taste valid history onion fame");
+                                    .importWallet(textEditingController.text);
+                                // .importWallet(
+                                //     "promote people van pencil december intact cement taste valid history onion fame");
                               },
                             ),
                           ],

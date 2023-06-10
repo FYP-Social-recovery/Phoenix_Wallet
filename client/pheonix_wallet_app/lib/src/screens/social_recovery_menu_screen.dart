@@ -160,6 +160,7 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                                 "Loading Failed!",
                                 "Something is wrong. Please try again.",
                                 colorText: AppColors.mainRed,
+                                backgroundColor: Colors.white70,
                               );
                             }
 
@@ -188,6 +189,7 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                                 "Loading Failed!",
                                 "Something is wrong. Please try again.",
                                 colorText: AppColors.mainRed,
+                                backgroundColor: Colors.white70,
                               );
                             }
 

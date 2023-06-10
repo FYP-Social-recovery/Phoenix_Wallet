@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:pheonix_wallet_app/src/apis/api.dart';
@@ -22,7 +23,7 @@ class WalletController extends GetxController {
   var selectedNetwork = 0.obs;
   var blockchain = networks[0]["Name"].toString().obs;
   var selectedNetworkType = networkTypes[1].obs;
-  var selectedNetworkLayer = networkLayers[0].obs;
+  var selectedNetworkLayer = networkLayers[1].obs;
 
   var network = "".obs;
   var currency = "".obs;
@@ -71,12 +72,12 @@ class WalletController extends GetxController {
     var web3Client = Web3Client(rpcUrl.value, httpClient);
 
     AuthController authController = Get.find();
+
     var credentials = EthPrivateKey.fromHex(authController.privateKey.value);
     var address = await credentials.extractAddress();
 
     EtherAmount balanceLocal = await web3Client.getBalance(address);
     balance.value = balanceLocal.getValueInUnit(EtherUnit.ether);
-    print(balance.value);
   }
 
   Future<void> sendEth() async {
@@ -148,11 +149,13 @@ class WalletController extends GetxController {
         authController.publicKey.value,
         authController.privateKey.value,
       );
+      print(contractAddress);
       if (contractAddress == "") {
         Get.snackbar(
           "Contract Creation Failed!",
           "Something is wrong. Please try again.",
           colorText: AppColors.mainRed,
+          backgroundColor: Colors.white70,
         );
       } else {
         nodeContractAddress.value = contractAddress;
@@ -162,26 +165,30 @@ class WalletController extends GetxController {
           usernameLocal,
           contractAddress,
         );
+        print(state);
         if (state == "") {
           Get.snackbar(
             "Contract Creation Failed!",
             "Something is wrong. Please try again.",
             colorText: AppColors.mainRed,
+            backgroundColor: Colors.white70,
           );
         } else {
           registered.value = true;
           username.value = usernameLocal;
+          Get.back();
           Get.snackbar(
             "Contract Creation Successful!",
             "Successfully created the contract.",
             colorText: AppColors.mainBlue,
+            backgroundColor: Colors.white70,
           );
         }
       }
     } else {
       usernameExists.value = true;
     }
-    Get.back();
+
     loading.value = false;
   }
 }

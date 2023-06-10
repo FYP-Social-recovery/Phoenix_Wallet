@@ -66,6 +66,7 @@ class AuthController extends GetxController {
         "Wallet Creation Failed!",
         "Something is wrong. Please try again.",
         colorText: AppColors.mainRed,
+        backgroundColor: Colors.white70,
       );
       print(e);
       loading.value = false;
@@ -77,6 +78,7 @@ class AuthController extends GetxController {
         "Wallet Creation Failed!",
         "Something is wrong. Please try again.",
         colorText: AppColors.mainRed,
+        backgroundColor: Colors.white70,
       );
 
       loading.value = false;
@@ -86,6 +88,7 @@ class AuthController extends GetxController {
         "Wallet Creation Successful!",
         "Successfully created the wallet.",
         colorText: AppColors.mainBlue,
+        backgroundColor: Colors.white70,
       );
 
       Get.toNamed(mnemonicPhraseScreen);
@@ -107,6 +110,7 @@ class AuthController extends GetxController {
         "Wallet Import Failed!",
         "Enter a valid phrase with 12 words.",
         colorText: AppColors.mainRed,
+        backgroundColor: Colors.white70,
       );
 
       loading.value = false;
@@ -132,15 +136,13 @@ class AuthController extends GetxController {
         walletController.nodeContractAddress.value = contract;
         walletController.username.value = username;
         walletController.registered.value = true;
-
-        print(username);
-        print(contract);
       }
     } catch (e) {
       Get.snackbar(
         "Wallet Import Failed!",
         "Something is wrong. Please try again.",
         colorText: AppColors.mainRed,
+        backgroundColor: Colors.white70,
       );
       print(e);
       loading.value = false;
@@ -152,6 +154,7 @@ class AuthController extends GetxController {
         "Wallet Import Failed!",
         "Something is wrong. Please try again.",
         colorText: AppColors.mainRed,
+        backgroundColor: Colors.white70,
       );
 
       loading.value = false;
@@ -161,6 +164,7 @@ class AuthController extends GetxController {
         "Wallet Import successful!",
         "Successfully imported the wallet.",
         colorText: AppColors.mainBlue,
+        backgroundColor: Colors.white70,
       );
 
       Get.toNamed(navigationScreen);

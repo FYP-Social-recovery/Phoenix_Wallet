@@ -286,12 +286,14 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                                     "Successful!",
                                     "Successfully distributed the shares.",
                                     colorText: AppColors.mainBlue,
+                                    backgroundColor: Colors.white70,
                                   );
                                 } else {
                                   Get.snackbar(
                                     "Failed!",
                                     "Something is wrong. Please try again.",
                                     colorText: AppColors.mainRed,
+                                    backgroundColor: Colors.white70,
                                   );
                                 }
 

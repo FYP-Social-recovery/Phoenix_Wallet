@@ -153,6 +153,7 @@ class DistributeSharesScreen2 extends StatelessWidget {
                                     "Successful!",
                                     "Successfully verified email.",
                                     colorText: AppColors.mainBlue,
+                                    backgroundColor: Colors.white70,
                                   );
                                   Get.toNamed(distributeSharesScreen3);
                                 } else {
@@ -160,6 +161,7 @@ class DistributeSharesScreen2 extends StatelessWidget {
                                     "Failed!",
                                     "OTP is not matching please try again.",
                                     colorText: AppColors.mainRed,
+                                    backgroundColor: Colors.white70,
                                   );
                                 }
                               } else {
@@ -167,6 +169,7 @@ class DistributeSharesScreen2 extends StatelessWidget {
                                   "Failed!",
                                   "Something is wrong. Please try again.",
                                   colorText: AppColors.mainRed,
+                                  backgroundColor: Colors.white70,
                                 );
                               }
 

@@ -157,6 +157,7 @@ class RecoveryRequestScreen2 extends StatelessWidget {
                                   "Successful!",
                                   "Successfully sent the recovery requests.",
                                   colorText: AppColors.mainBlue,
+                                  backgroundColor: Colors.white70,
                                 );
                                 Get.back();
                                 Get.back();
@@ -165,6 +166,7 @@ class RecoveryRequestScreen2 extends StatelessWidget {
                                   "Failed!",
                                   "Something is wrong. Please try again.",
                                   colorText: AppColors.mainRed,
+                                  backgroundColor: Colors.white70,
                                 );
                               }
 

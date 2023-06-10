@@ -148,6 +148,7 @@ class RecoveryRequestScreen1 extends StatelessWidget {
                                   "Successful!",
                                   "Successfully send the OTP.",
                                   colorText: AppColors.mainBlue,
+                                  backgroundColor: Colors.white70,
                                 );
                                 Get.toNamed(recoveryRequestScreen2);
                               } else {
@@ -155,6 +156,7 @@ class RecoveryRequestScreen1 extends StatelessWidget {
                                   "Failed!",
                                   "Something is wrong. Please try again.",
                                   colorText: AppColors.mainRed,
+                                  backgroundColor: Colors.white70,
                                 );
                               }
 

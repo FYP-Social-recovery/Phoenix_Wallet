@@ -157,7 +157,7 @@ class AddShareholdersScreen extends StatelessWidget {
                           TextFieldTwo(
                             labelText: "Guardian 1",
                             controller: textEditingController1,
-                            fontSize: 20,
+                            fontSize: 13,
                             fontWeight: FontWeight.normal,
                             fontColor: AppColors.mainBlue,
                             fontTextAlign: TextAlign.center,
@@ -176,7 +176,7 @@ class AddShareholdersScreen extends StatelessWidget {
                           TextFieldTwo(
                             labelText: "Guardian 2",
                             controller: textEditingController2,
-                            fontSize: 20,
+                            fontSize: 13,
                             fontWeight: FontWeight.normal,
                             fontColor: AppColors.mainBlue,
                             fontTextAlign: TextAlign.center,
@@ -195,7 +195,7 @@ class AddShareholdersScreen extends StatelessWidget {
                           TextFieldTwo(
                             labelText: "Guardian 3",
                             controller: textEditingController3,
-                            fontSize: 20,
+                            fontSize: 13,
                             fontWeight: FontWeight.normal,
                             fontColor: AppColors.mainBlue,
                             fontTextAlign: TextAlign.center,
@@ -246,15 +246,15 @@ class AddShareholdersScreen extends StatelessWidget {
                           authController.privateKey.value,
                           walletController.nodeContractAddress.value,
                         );
-
+                        Get.back();
                         Get.snackbar(
                           "Successfull!",
                           "Successfully Sent Gurdian Requests.",
                           colorText: AppColors.mainBlue,
+                          backgroundColor: Colors.white70,
                         );
 
                         walletController.loading.value = false;
-                        Get.back();
                       },
                     ),
                     Spacer(

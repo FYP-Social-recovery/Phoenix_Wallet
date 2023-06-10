@@ -370,6 +370,7 @@ class _RecoveryScreen3State extends State<RecoveryScreen3> {
                                     "Successful!",
                                     "Successfully recovered the wallet.",
                                     colorText: AppColors.mainBlue,
+                                    backgroundColor: Colors.white70,
                                   );
                                   setState(() {
                                     capturState = 3;
@@ -379,6 +380,7 @@ class _RecoveryScreen3State extends State<RecoveryScreen3> {
                                     "Failed!",
                                     "Something is wrong. Please try again.",
                                     colorText: AppColors.mainRed,
+                                    backgroundColor: Colors.white70,
                                   );
                                 }
 

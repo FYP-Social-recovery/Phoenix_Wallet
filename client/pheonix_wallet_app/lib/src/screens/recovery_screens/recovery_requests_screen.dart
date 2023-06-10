@@ -216,19 +216,19 @@ class RecoveryRequestsScreen extends StatelessWidget {
                 ),
               ),
               walletController.loading.value
+                  ? Container(
+                      color: Colors.black26,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                    )
+                  : Container(),
+              walletController.loading.value
                   ? Align(
                       alignment: Alignment.center,
                       child: LoadingAnimationWidget.staggeredDotsWave(
                         color: AppColors.mainBlue,
                         size: 70,
                       ),
-                    )
-                  : Container(),
-              walletController.loading.value
-                  ? Container(
-                      color: Colors.black26,
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
                     )
                   : Container(),
             ],

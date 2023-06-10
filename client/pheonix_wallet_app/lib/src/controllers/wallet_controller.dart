@@ -38,7 +38,7 @@ class WalletController extends GetxController {
   var email = "".obs;
 
   var beShareholderRequests = [""].obs;
-  var shareholderRequestStatus = [[]].obs;
+  var shareholderRequestStatus = [].obs;
   var shareRecoveryRequests = [""].obs;
 
   var usernameExists = false.obs;

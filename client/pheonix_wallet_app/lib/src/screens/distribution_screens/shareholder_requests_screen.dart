@@ -198,8 +198,8 @@ class ShareHolderRequestsScreen extends StatelessWidget {
                             height: 15,
                           );
                         },
-                        itemCount: walletController
-                            .shareholderRequestStatus.value.length,
+                        itemCount:
+                            walletController.beShareholderRequests.value.length,
                       ),
                     ),
                     Spacer(

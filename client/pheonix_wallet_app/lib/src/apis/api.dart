@@ -252,7 +252,7 @@ class Api {
 
       if (response.statusCode == 200) {
         dynamic shareHolderList = json.decode(response.body)["result"];
-
+        print(shareHolderList);
         // [[0xc2b2904A2E8Dad66e1CeC642CAb2E73C527BA6b6, Pending], [0x2A16c9190272Fc0B45400E567418BA44cF8f1FC8, Pending], [0x5a2F9e9c4c36Ac1cA6E485c9235b7B532cB6C09f, Pending]]
         // PENDING = "Pending"
         // ACCEPTED = "Accepted"
@@ -268,7 +268,7 @@ class Api {
 
   // ShareholderRequstScreen -> On page loading
 
-  static Future<dynamic> checkRequestsForBeAHolder(
+  static Future<List<String>> checkRequestsForBeAHolder(
       String publicKey, String privateKey, String contractAddress) async {
     try {
       var uri = Uri.https(serverURL, 'node-contract/be-holder-requests');
@@ -281,8 +281,14 @@ class Api {
       final response = await http.post(uri, body: map);
 
       if (response.statusCode == 200) {
-        dynamic shareHolderList = json.decode(response.body)["result"];
+        dynamic result = json.decode(response.body)["result"];
+        print(result);
+        List<String> shareHolderList = [];
+        for (var element in result) {
+          shareHolderList.add(element);
+        }
 
+        print(shareHolderList);
         // [0xD4d37C895D9c4b183B1c5DAd2C56Ff3182D001D4]
         return shareHolderList;
       }

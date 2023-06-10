@@ -21,6 +21,8 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
         children: [
           Align(
             alignment: Alignment.topCenter,
@@ -144,14 +146,14 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
                           onTap: () async {
                             walletController.loading.value = true;
 
-                            dynamic beShareHolderList =
+                            List<String> beShareHolderList =
                                 await Api.checkRequestsForBeAHolder(
                               authController.publicKey.value,
                               authController.privateKey.value,
                               walletController.nodeContractAddress.value,
                             );
 
-                            if (beShareHolderList.legnth != 0) {
+                            if (beShareHolderList.length != 0) {
                               walletController.beShareholderRequests.value =
                                   beShareHolderList;
                               Get.toNamed(shareHolderRequestsScreen);
@@ -308,19 +310,24 @@ class SocialRecoveryMenuScreen extends StatelessWidget {
             ],
           ),
           walletController.loading.value
-              ? Align(
-                  alignment: Alignment.center,
-                  child: LoadingAnimationWidget.staggeredDotsWave(
-                    color: AppColors.mainBlue,
-                    size: 70,
-                  ),
-                )
-              : Container(),
-          walletController.loading.value
               ? Container(
                   color: Colors.black26,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
+                )
+              : Container(),
+          walletController.loading.value
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: AppColors.mainBlue,
+                        size: 70,
+                      ),
+                    ),
+                  ],
                 )
               : Container(),
         ],

@@ -102,7 +102,7 @@ class RecoveryScreen2 extends StatelessWidget {
                               focusColor: AppColors.mainGreen,
                             ),
                             //set to true to show as box or false to show as dash
-                            showFieldAsBox: true,
+                            showFieldAsBox: false,
                             //runs when a code is typed in
                             onCodeChanged: (String code) {
                               //handle validation or checks here
@@ -110,6 +110,12 @@ class RecoveryScreen2 extends StatelessWidget {
                             //runs when every textfield is filled
                             onSubmit: (String verificationCode) {
                               walletController.otp.value = verificationCode;
+
+                              int val = int.parse(walletController.otp.value);
+
+                              print(val);
+
+                              walletController.otp.value = val.toString();
                               // showDialog(
                               //     context: context,
                               //     builder: (context) {
@@ -157,19 +163,19 @@ class RecoveryScreen2 extends StatelessWidget {
                 ),
               ),
               walletController.loading.value
-                  ? Align(
-                      alignment: Alignment.center,
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: AppColors.mainBlue,
-                        size: 70,
-                      ),
+                  ? Container(
+                      color: Colors.black54,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
                     )
                   : Container(),
               walletController.loading.value
-                  ? Container(
-                      color: Colors.black26,
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: Colors.white,
+                        size: 70,
+                      ),
                     )
                   : Container(),
             ],

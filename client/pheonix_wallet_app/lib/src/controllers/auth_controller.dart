@@ -48,6 +48,22 @@ class AuthController extends GetxController {
     mnemonicPhrase.value = "";
     entrophy.value = "";
 
+    WalletController walletController = Get.find();
+    walletController.registered.value = false;
+    walletController.nodeContractAddress.value = "";
+    walletController.username.value = "";
+    walletController.email.value = "";
+
+    walletController.beShareholderRequests.value = [""];
+    walletController.shareholderRequestStatus.value = [];
+    walletController.shareRecoveryRequests.value = [""];
+
+    walletController.usernameExists.value = false;
+
+    walletController.otpHash.value = "";
+    walletController.otp.value = "";
+    walletController.generatedSigendOTP.value = "";
+
     try {
       String randomMnemonic = await Api.generateMnemonicForNewAccount();
       print(randomMnemonic);
@@ -104,6 +120,22 @@ class AuthController extends GetxController {
     publicKey.value = "";
     mnemonicPhrase.value = "";
     entrophy.value = "";
+
+    WalletController walletController = Get.find();
+    walletController.registered.value = false;
+    walletController.nodeContractAddress.value = "";
+    walletController.username.value = "";
+    walletController.email.value = "";
+
+    walletController.beShareholderRequests.value = [""];
+    walletController.shareholderRequestStatus.value = [];
+    walletController.shareRecoveryRequests.value = [""];
+
+    walletController.usernameExists.value = false;
+
+    walletController.otpHash.value = "";
+    walletController.otp.value = "";
+    walletController.generatedSigendOTP.value = "";
 
     if (phrase.split(" ").length != 12) {
       Get.snackbar(

@@ -92,7 +92,7 @@ class DistributeSharesScreen2 extends StatelessWidget {
                             height: 30,
                           ),
                           OtpTextField(
-                            numberOfFields: 5,
+                            numberOfFields: 4,
                             borderColor: Color(0xFFFFFFFF),
                             textStyle: TextStyle(
                               color: Colors.white,
@@ -103,14 +103,18 @@ class DistributeSharesScreen2 extends StatelessWidget {
                               focusColor: AppColors.mainGreen,
                             ),
                             //set to true to show as box or false to show as dash
-                            showFieldAsBox: true,
+                            showFieldAsBox: false,
                             //runs when a code is typed in
                             onCodeChanged: (String code) {
+                              // walletController.otp.value =
+                              //     walletController.otp.value + code;
+                              // print(walletController.otp.value);
                               //handle validation or checks here
                             },
                             //runs when every textfield is filled
                             onSubmit: (String verificationCode) {
                               walletController.otp.value = verificationCode;
+                              print(walletController.otp.value);
                               // showDialog(
                               //     context: context,
                               //     builder: (context) {
@@ -143,9 +147,20 @@ class DistributeSharesScreen2 extends StatelessWidget {
                             onPressed: () async {
                               walletController.loading.value = true;
 
+                              int val = int.parse(walletController.otp.value);
+
+                              print(val);
+
+                              walletController.otp.value = val.toString();
+
                               dynamic result = await Api.getOTPHash(
                                 walletController.otp.value,
                               );
+
+                              print(walletController.otp.value);
+
+                              print(result);
+                              print(walletController.otpHash.value);
 
                               if (result != 0) {
                                 if (result == walletController.otpHash.value) {
@@ -190,19 +205,19 @@ class DistributeSharesScreen2 extends StatelessWidget {
                 ),
               ),
               walletController.loading.value
-                  ? Align(
-                      alignment: Alignment.center,
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: AppColors.mainBlue,
-                        size: 70,
-                      ),
+                  ? Container(
+                      color: Colors.black54,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
                     )
                   : Container(),
               walletController.loading.value
-                  ? Container(
-                      color: Colors.black26,
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: Colors.white,
+                        size: 70,
+                      ),
                     )
                   : Container(),
             ],

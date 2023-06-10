@@ -54,6 +54,9 @@ class NavigationScreen extends StatelessWidget {
           ),
         ],
         onTapped: (int value) {
+          if (value == 1) {
+            walletController.getBalance();
+          }
           authController.selectedIndex.value = value;
         },
         bodyBgColor: AppColors.backgroundRed,
@@ -63,12 +66,7 @@ class NavigationScreen extends StatelessWidget {
       ),
       body: Obx(
         () => SafeArea(
-          child: walletController.loading.value
-              ? LoadingAnimationWidget.staggeredDotsWave(
-                  color: AppColors.mainBlue,
-                  size: 70,
-                )
-              : pages[authController.selectedIndex.value],
+          child: pages[authController.selectedIndex.value],
         ),
       ),
     );

@@ -282,6 +282,9 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                                 );
 
                                 if (result != 0) {
+                                  Get.back();
+                                  Get.back();
+                                  Get.back();
                                   Get.snackbar(
                                     "Successful!",
                                     "Successfully distributed the shares.",
@@ -298,10 +301,6 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                                 }
 
                                 walletController.loading.value = false;
-
-                                Get.back();
-                                Get.back();
-                                Get.back();
                               }
                             },
                             color: Color(0xFF007CFF).withOpacity(0.5),
@@ -349,19 +348,19 @@ class _DistributeSharesScreen3State extends State<DistributeSharesScreen3> {
                 ),
               ),
               walletController.loading.value
-                  ? Align(
-                      alignment: Alignment.center,
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: AppColors.mainBlue,
-                        size: 70,
-                      ),
+                  ? Container(
+                      color: Colors.black54,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
                     )
                   : Container(),
               walletController.loading.value
-                  ? Container(
-                      color: Colors.black26,
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: Colors.white,
+                        size: 70,
+                      ),
                     )
                   : Container(),
             ],

@@ -427,9 +427,12 @@ class Api {
       final response = await http.post(uri, body: map);
 
       if (response.statusCode == 200) {
-        List<String> result =
-            json.decode(response.body)["result"]; //[email, generatedSigendOTP]
-
+        dynamic r = json.decode(response.body)["result"];
+        List<String> result = []; //[email, generatedSigendOTP]
+        for (var element in r) {
+          result.add(element);
+        }
+        print(result);
         return result;
       }
     } catch (e) {
@@ -450,12 +453,14 @@ class Api {
     try {
       var uri = Uri.https(serverURL, 'node-contract/request-shares');
 
+      print(generatedSigendOTP);
+
       var map = new Map<String, dynamic>();
       map['publicKey'] = publicKey;
       map['privateKey'] = privateKey;
       map['nodeContract'] = contractAddress;
       map['userName'] = username;
-      map['generatedSigendOTP'] = generatedSigendOTP;
+      map['generatedSignedOTP'] = generatedSigendOTP;
       map['OTP'] = OTP;
 
       final response = await http.post(uri, body: map);
@@ -489,8 +494,13 @@ class Api {
       final response = await http.post(uri, body: map);
 
       if (response.statusCode == 200) {
-        List<String> recoveryRequestsList =
-            json.decode(response.body)["result"];
+        dynamic result = json.decode(response.body)["result"];
+
+        List<String> recoveryRequestsList = [];
+
+        for (var element in result) {
+          recoveryRequestsList.add(element);
+        }
 
         return recoveryRequestsList;
       }

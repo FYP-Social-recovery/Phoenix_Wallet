@@ -19,6 +19,7 @@ class RecoveryScreen2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainBlue,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Obx(() {
           return Stack(
@@ -91,7 +92,7 @@ class RecoveryScreen2 extends StatelessWidget {
                             height: 30,
                           ),
                           OtpTextField(
-                            numberOfFields: 5,
+                            numberOfFields: 4,
                             borderColor: Color(0xFFFFFFFF),
                             textStyle: TextStyle(
                               color: Colors.white,
@@ -145,8 +146,14 @@ class RecoveryScreen2 extends StatelessWidget {
                           ),
                           PrimaryButton(
                             buttonText: "Proceed",
-                            onPressed: () {
+                            onPressed: () async {
+                              walletController.loading.value = true;
+
+                              await Future.delayed(Duration(milliseconds: 500));
+
                               Get.toNamed(recoveryScreen3);
+
+                              walletController.loading.value = false;
                             },
                             color: Color(0xFF007CFF).withOpacity(0.5),
                           ),

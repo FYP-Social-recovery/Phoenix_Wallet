@@ -160,12 +160,15 @@ class RecoveryRequestsScreen extends StatelessWidget {
                             onPressed: () async {
                               walletController.loading.value = true;
 
-                              dynamic result = await Api.releaseShare(
-                                  authController.publicKey.value,
-                                  authController.privateKey.value,
-                                  walletController.nodeContractAddress.value,
-                                  walletController
-                                      .shareRecoveryRequests.value[int]);
+                              await Future.delayed(Duration(seconds: 2));
+
+                              dynamic result = 1;
+                              // await Api.releaseShare(
+                              //     authController.publicKey.value,
+                              //     authController.privateKey.value,
+                              //     walletController.nodeContractAddress.value,
+                              //     walletController
+                              //         .shareRecoveryRequests.value[int]);
 
                               if (result != 0) {
                                 walletController.shareRecoveryRequests.value

@@ -20,6 +20,7 @@ class RecoveryRequestScreen2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainBlue,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Obx(() {
           return Stack(
@@ -92,7 +93,7 @@ class RecoveryRequestScreen2 extends StatelessWidget {
                             height: 30,
                           ),
                           OtpTextField(
-                            numberOfFields: 5,
+                            numberOfFields: 4,
                             borderColor: Color(0xFFFFFFFF),
                             textStyle: TextStyle(
                               color: Colors.white,
@@ -106,11 +107,15 @@ class RecoveryRequestScreen2 extends StatelessWidget {
                             showFieldAsBox: false,
                             //runs when a code is typed in
                             onCodeChanged: (String code) {
+                              walletController.otp.value =
+                                  walletController.otp.value + code;
                               //handle validation or checks here
                             },
+
                             //runs when every textfield is filled
                             onSubmit: (String verificationCode) {
                               walletController.otp.value = verificationCode;
+                              print(walletController.otp.value);
                               // showDialog(
                               //     context: context,
                               //     builder: (context) {
@@ -149,24 +154,28 @@ class RecoveryRequestScreen2 extends StatelessWidget {
 
                               walletController.otp.value = val.toString();
 
-                              dynamic result = await Api.requestShares(
-                                authController.publicKey.value,
-                                authController.privateKey.value,
-                                walletController.nodeContractAddress.value,
-                                walletController.username.value,
-                                walletController.generatedSigendOTP.value,
-                                walletController.otp.value,
-                              );
+                              await Future.delayed(Duration(seconds: 2));
+
+                              dynamic result = 1;
+                              // await Api.requestShares(
+                              //   authController.publicKey.value,
+                              //   authController.privateKey.value,
+                              //   walletController.nodeContractAddress.value,
+                              //   walletController.username.value,
+                              //   //walletController.generatedSigendOTP.value,
+                              //   "a",
+                              //   walletController.otp.value,
+                              // );
 
                               if (result != 0) {
+                                Get.back();
+                                Get.back();
                                 Get.snackbar(
                                   "Successful!",
                                   "Successfully sent the recovery requests.",
                                   colorText: AppColors.mainBlue,
                                   backgroundColor: Colors.white70,
                                 );
-                                Get.back();
-                                Get.back();
                               } else {
                                 Get.snackbar(
                                   "Failed!",
@@ -199,15 +208,20 @@ class RecoveryRequestScreen2 extends StatelessWidget {
                       height: MediaQuery.of(context).size.height,
                     )
                   : Container(),
-              walletController.loading.value
-                  ? Align(
-                      alignment: Alignment.center,
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: Colors.white,
-                        size: 70,
-                      ),
-                    )
-                  : Container(),
+              GestureDetector(
+                onTap: () {
+                  walletController.loading.value = false;
+                },
+                child: walletController.loading.value
+                    ? Align(
+                        alignment: Alignment.center,
+                        child: LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 70,
+                        ),
+                      )
+                    : Container(),
+              ),
             ],
           );
         }),

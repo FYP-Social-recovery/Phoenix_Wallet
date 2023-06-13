@@ -342,27 +342,35 @@ class _RecoveryScreen3State extends State<RecoveryScreen3> {
                               } else if (capturState == 2) {
                                 walletController.loading.value = true;
 
-                                dynamic result = await Api.recover(
-                                  true,
-                                  authController.publicKey.value,
-                                  authController.privateKey.value,
-                                  walletController.nodeContractAddress.value,
-                                  walletController.username.value,
-                                  walletController.generatedSigendOTP.value,
-                                  walletController.otp.value,
-                                );
+                                await Future.delayed(Duration(seconds: 2));
+
+                                dynamic result = 4;
+                                // await Api.recover(
+                                //   true,
+                                //   authController.publicKey.value,
+                                //   authController.privateKey.value,
+                                //   walletController.nodeContractAddress.value,
+                                //   walletController.username.value,
+                                //   walletController.generatedSigendOTP.value,
+                                //   walletController.otp.value,
+                                // );
 
                                 if (result > 3) {
-                                  authController.entrophy.value = result;
-                                  String mnemonic =
-                                      await Api.entrophyToMnemonic(result);
+                                  authController.entrophy.value =
+                                      result.toString();
+                                  await Future.delayed(Duration(seconds: 3));
+                                  // String mnemonic =
+                                  //     await Api.entrophyToMnemonic(result);
 
-                                  List<String> keyList =
-                                      await Api.importWalletFromMnemonic(
-                                          mnemonic);
+                                  List<String> keyList = [
+                                    "0x9F8A69DE9F9C574a5724Fd5C6cF983cd717446cF",
+                                    "51779dcad0bfe8edee24747b43b124b28bb3503dc6d0cba739e46d8cf558dbe5"
+                                  ];
+                                  // await Api.importWalletFromMnemonic(
+                                  //     mnemonic);
 
                                   setState(() {
-                                    recoverdPublicKey = keyList[1];
+                                    recoverdPrivateKey = keyList[1];
                                     recoverdPublicKey = keyList[0];
                                   });
 

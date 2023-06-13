@@ -60,6 +60,7 @@ class TextFieldTwo extends StatelessWidget {
           fontWeight: fontWeight,
         ),
         textAlign: fontTextAlign,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           suffixText: suffixText,
           suffixStyle: suffixStyle,

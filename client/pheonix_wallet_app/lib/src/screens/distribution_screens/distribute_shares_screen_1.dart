@@ -21,6 +21,7 @@ class DistributeSharesScreen1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainBlue,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Obx(() {
           return Stack(

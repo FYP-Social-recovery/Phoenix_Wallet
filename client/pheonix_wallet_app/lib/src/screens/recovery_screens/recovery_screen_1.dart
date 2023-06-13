@@ -21,6 +21,7 @@ class RecoveryScreen1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainBlue,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Obx(() {
           return Stack(
@@ -131,7 +132,9 @@ class RecoveryScreen1 extends StatelessWidget {
                               walletController.otpHash.value = "";
                               walletController.otp.value = "";
                               walletController.generatedSigendOTP.value = "";
+                              // List<String> result = ["a", "c"];
 
+                              // await Future.delayed(Duration(seconds: ))
                               dynamic result = await Api.getEmailByUserName(
                                 authController.publicKey.value,
                                 authController.privateKey.value,
@@ -143,13 +146,13 @@ class RecoveryScreen1 extends StatelessWidget {
                                 walletController.email.value = result[0];
                                 walletController.generatedSigendOTP.value =
                                     result[1];
+                                Get.toNamed(recoveryScreen2);
                                 Get.snackbar(
                                   "Successful!",
                                   "Successfully send the OTP.",
                                   colorText: AppColors.mainBlue,
                                   backgroundColor: Colors.white70,
                                 );
-                                Get.toNamed(recoveryScreen2);
                               } else {
                                 Get.snackbar(
                                   "Failed!",

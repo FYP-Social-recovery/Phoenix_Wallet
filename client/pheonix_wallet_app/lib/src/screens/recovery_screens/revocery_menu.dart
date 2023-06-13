@@ -48,11 +48,16 @@ class RecoveryMenuScreen extends StatelessWidget {
                         onTap: () async {
                           walletController.loading.value = true;
 
-                          dynamic result = await Api.checkRequestsForShare(
-                            authController.publicKey.value,
-                            authController.privateKey.value,
-                            walletController.nodeContractAddress.value,
-                          );
+                          await Future.delayed(Duration(seconds: 2));
+
+                          List<String> result = [
+                            "0x9F8A69DE9F9C574a5724Fd5C6cF983cd717446cF"
+                          ];
+                          // await Api.checkRequestsForShare(
+                          //   authController.publicKey.value,
+                          //   authController.privateKey.value,
+                          //   walletController.nodeContractAddress.value,
+                          // );
 
                           if (result.length != 0) {
                             walletController.shareRecoveryRequests.value =

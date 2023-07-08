@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pheonix_wallet_app/src/constants.dart';
 
-import 'settings_controller.dart';
+import '../../controllers/settings_controller.dart';
 
 /// Displays the various settings that can be customized by the user.
 ///
@@ -9,7 +10,7 @@ import 'settings_controller.dart';
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key, required this.controller});
 
-  static const routeName = '/settings';
+  static const routeName = settingsPage;
 
   final SettingsController controller;
 

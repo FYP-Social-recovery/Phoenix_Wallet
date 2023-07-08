@@ -66,10 +66,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      WalletController walletController = Get.find();
-                      walletController.gurdianStatus();
-                    },
+                    onTap: () {},
                     child: Icon(
                       Icons.notifications,
                       size: 30,

@@ -14,10 +14,12 @@ class NodeContractModel:
     def deploy(publicAddress,privateAddress):
         # NodeContractModel.defaultPrivateAddress=privateAddress
         # NodeContractModel.defaultPublicAddress=publicAddress
-        
+        print("befor opening")
         #with open(r"contract/compiled_code.json","r") as file: # for windows
         with open("../contract/compiled_code.json","r") as file: # for ubuntu
             compiled_sol = json.loads(file.read())
+        
+        # print(compiled_sol)
 
         # get bytecode
         bytecode = compiled_sol["contracts"]["Node.sol"]["Node"]["evm"]["bytecode"]["object"]

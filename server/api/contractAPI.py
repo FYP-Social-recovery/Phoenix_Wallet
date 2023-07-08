@@ -17,6 +17,8 @@ from controller.fvss_controller import VSS_Controller
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
+recovery_generatedSignedOTP = ""
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -47,6 +49,8 @@ def deployPublicContract():
 def nodeDeploy():
     privateKey=request.form['privateKey']
     publicKey=request.form['publicKey']
+    print(privateKey)
+    print(publicKey)
     contractAddress=NodeContractController.deploy(publicKeyLocal=publicKey,privateKeyLocal=privateKey)
     return {"result":contractAddress},200
 
@@ -58,6 +62,12 @@ def requestShares():
     userName=request.form['userName']
     generatedSignedOTP=request.form['generatedSignedOTP']
     otp=request.form['OTP']
+    
+    print(generatedSignedOTP)
+    
+    global recovery_generatedSignedOTP
+    generatedSignedOTP = recovery_generatedSignedOTP
+    print(generatedSignedOTP)
 
     OTP_client=OTPController()
     entered_signed_otp=OTP_client.add_sign(otp)
@@ -126,8 +136,9 @@ def importWalletFromMnemonic():
 def mnemonicToEntropy():
 
     mnemonic=request.form['mnemonic']
+    
     entropy=KeyGenerationController.mnemonicToEntropy(mnemonic=mnemonic)
-    return {"result":str(entropy)},200
+    return {"result":str(int.from_bytes(entropy, byteorder='big'))},200
 
 @app.route('/key-generation/entropy-to-mnemonic', methods=['POST'])
 def entropyToMnemonic():
@@ -245,7 +256,8 @@ def distribute():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     email=request.form['email']
-    entropy=request.form['entropy']
+    entropy=int(request.form['entropy'])
+    # entrophy_byte = KeyGenerationController.bitstring_to_bytes(bin(int(entropy)))
     print("OTP verification successful")
     print("Start Enrolling")
     # Capture Enrolling fingerprint template
@@ -458,12 +470,18 @@ def getEmailByUserName():
     privateKey=request.form['privateKey']
     nodeContract=request.form['nodeContract']
     email=NodeContractController.getEmailByUserName(userName=userName,publicKeyLocal=publicKey,privateKeyLocal=privateKey,nodeContractAddressLocal=nodeContract)
+    print("email :", email)
+    
+    email = "mailavishka@gmail.com"
     
     OTP_client=OTPController()
     otp,generated_signed_otp=OTP_client.generateSignedOTP()
     Email_client=EmailController()
     Email_client.sendEmail(email,otp)
-    return {"result":[email,generated_signed_otp]},200
+    print(otp, generated_signed_otp)
+    global recovery_generatedSignedOTP
+    recovery_generatedSignedOTP = generated_signed_otp
+    return {"result":[email,str(generated_signed_otp)]},200
 
 @app.route('/public-contract/get-contract-address-by-public-address', methods=['POST'])
 def getContractAddressByPublicAddress():

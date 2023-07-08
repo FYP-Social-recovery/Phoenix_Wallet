@@ -51,7 +51,7 @@ class RecoveryMenuScreen extends StatelessWidget {
                           await Future.delayed(Duration(seconds: 2));
 
                           List<String> result = [
-                            "0x9F8A69DE9F9C574a5724Fd5C6cF983cd717446cF"
+                            // "0x9F8A69DE9F9C574a5724Fd5C6cF983cd717446cF"
                           ];
                           // await Api.checkRequestsForShare(
                           //   authController.publicKey.value,
@@ -72,7 +72,7 @@ class RecoveryMenuScreen extends StatelessWidget {
                           } else {
                             Get.snackbar(
                               "Failed!",
-                              "Something is wrong. Please try again.",
+                              "No requests to show. Please try again.",
                               colorText: AppColors.mainRed,
                               backgroundColor: Colors.white70,
                             );

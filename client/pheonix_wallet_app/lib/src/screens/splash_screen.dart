@@ -24,8 +24,9 @@ class SplashScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Image.asset(
               "assets/waves upside.png",
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.fill,
               width: MediaQuery.of(context).size.width,
+              height: 500,
             ),
           ),
           Scaffold(

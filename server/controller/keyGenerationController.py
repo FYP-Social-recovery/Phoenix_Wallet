@@ -71,3 +71,6 @@ class KeyGenerationController:
         prv,pub=KeyGenerationController.importWalletFromMnemonic(mnemonic)
         return prv,pub
 
+
+# integer_value = int.from_bytes(KeyGenerationController.mnemonicToEntropy('promote people van pencil december intact cement taste valid history onion fame'), byteorder='big')
+# print(integer_value)
